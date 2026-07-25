@@ -1,0 +1,112 @@
+generated: '2026-07-25'
+method: derived
+source: openapi/ki-insurance-broker-platform-openapi.yml
+also_derived_from:
+- https://login.ki-insurance.com/.well-known/openid-configuration
+- security/ki-insurance-domain-security.yml
+summary: >-
+  Ki asserts no conformance publicly. Everything below is derived from what its
+  authorization server advertises and what its own client does. Ki publishes no
+  certifications page, no trust centre and no compliance programme, so no
+  Compliance pointer is emitted for this provider.
+standards:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    Auth0 authorization server at login.ki-insurance.com advertises
+    /authorize + /oauth/token; the platform client performs authorization-code
+    login and sends the access token as a bearer credential.
+- id: oidc-core
+  conforms: true
+  evidence: >-
+    /.well-known/openid-configuration (HTTP 200) advertises issuer, userinfo,
+    jwks_uri, id_token signing algorithms and the standard OIDC claim set.
+- id: oidc-discovery
+  conforms: true
+  evidence: https://login.ki-insurance.com/.well-known/openid-configuration
+- id: rfc8414-oauth-authorization-server-metadata
+  conforms: true
+  evidence: https://login.ki-insurance.com/.well-known/oauth-authorization-server (HTTP 200)
+- id: rfc7517-jwks
+  conforms: true
+  evidence: https://login.ki-insurance.com/.well-known/jwks.json (HTTP 200)
+- id: rfc7636-pkce
+  conforms: true
+  evidence: code_challenge_methods_supported includes S256
+- id: rfc6749-refresh-tokens
+  conforms: true
+  evidence: offline_access scope and refresh_token grant advertised
+- id: rfc7519-jwt
+  conforms: true
+  evidence: bearerFormat JWT; RS256/PS256 id_token signing advertised
+- id: fapi
+  conforms: false
+  evidence: >-
+    The tenant permits implicit and password grants and `none` token-endpoint
+    auth, and allows the `plain` PKCE method — none of which a FAPI profile
+    permits. No mTLS or private_key_jwt-only posture is enforced publicly.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: No application/problem+json anywhere; the client branches on status only.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt is 404 on ki-insurance.com.
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset/Deprecation header support and no deprecation policy.
+- id: rfc8615-well-known-api-catalog
+  conforms: false
+  evidence: /.well-known/api-catalog is 404.
+- id: openapi
+  conforms: false
+  evidence: >-
+    Ki publishes no OpenAPI. The spec in openapi/ is an API Evangelist derivation
+    from the published client bundle, not a provider artifact.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    No event, webhook or streaming surface exists. The only EventSource usage in
+    the platform bundle belongs to the LaunchDarkly SDK. Not applicable rather
+    than missing.
+- id: acord
+  conforms: false
+  evidence: >-
+    No ACORD, AL3, ACORD XML, NGDS or IVANS reference appears on Ki's site or in
+    the platform bundle. As a Lloyd's follow syndicate Ki's plumbing runs through
+    Lloyd's own modernisation programme instead.
+- id: oed-oasislmf
+  conforms: partial
+  evidence: >-
+    The Ki-Insurance GitHub org maintains a fork of OasisLMF/OpenDataTransform,
+    the open catastrophe exposure-data (OED) transformation tool — the only
+    open-standard signal Ki emits publicly. Exposure data, not placement data.
+- id: hsts
+  conforms: true
+  evidence: >-
+    ki-insurance.com max-age 63072000, app.ki-insurance.com max-age 31536000
+    (security/ki-insurance-domain-security.yml).
+- id: tls13
+  conforms: true
+  evidence: TLSv1.3 on both ki-insurance.com and app.ki-insurance.com.
+- id: dnssec
+  conforms: false
+  evidence: No DNSSEC on ki-insurance.com.
+- id: caa
+  conforms: false
+  evidence: No CAA records on ki-insurance.com.
+- id: dmarc
+  conforms: partial
+  evidence: DMARC present but policy is p=none (monitor only).
+market_context:
+  lloyds_programmes:
+  - name: Blueprint Two
+    referenced_by_ki: true
+    note: >-
+      Ki's own press releases frame the platform against Lloyd's Blueprint Two
+      modernisation, but Ki publishes no conformance claim or technical artifact
+      against the Core Data Record.
+  - name: Core Data Record (CDR)
+    referenced_by_ki: false
+  - name: PPL / Whitespace electronic placement
+    referenced_by_ki: false
+    note: Market placement rails Ki interoperates with; nothing published.

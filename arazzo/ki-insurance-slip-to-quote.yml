@@ -1,0 +1,83 @@
+arazzo: 1.0.1
+info:
+  title: Ki — turn a broker slip into a quote
+  version: 1.0.0
+  description: >-
+    Ki's slip extraction pipeline: register the slip upload, execute the
+    extraction job, poll it to completion, read the result and promote it into a
+    quote. Every operationId exists verbatim in the referenced OpenAPI, which is
+    an API Evangelist derivation from Ki's published client bundle. Partner Auth0
+    credentials are required; Ki publishes no sandbox.
+sourceDescriptions:
+- name: kiBrokerPlatform
+  url: ../openapi/ki-insurance-broker-platform-openapi.yml
+  type: openapi
+workflows:
+- workflowId: slip-to-quote
+  summary: Extract a broker slip and create a Ki quote from the result.
+  inputs:
+    type: object
+    properties:
+      slipDocument:
+        type: string
+        description: The broker slip document, sent as a multipart body.
+  steps:
+  - stepId: createUpload
+    description: Register the slip document for extraction.
+    operationId: createSlipExtractionUpload
+    requestBody:
+      contentType: multipart/form-data
+      payload: $inputs.slipDocument
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: executeJob
+    description: Execute the extraction job over the uploaded slip.
+    operationId: createSlipExtractionExecuteSlipExtractionJob
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      jobId: $response.body#/jobId
+  - stepId: pollJobStatus
+    description: >-
+      Poll until extraction completes. No webhook or callback exists — polling is
+      the only completion mechanism Ki exposes.
+    operationId: getSlipExtractionJobStatus
+    parameters:
+    - name: jobId
+      in: path
+      value: $steps.executeJob.outputs.jobId
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: readResult
+    description: Read the extracted, structured slip data for human review.
+    operationId: getSlipExtractionJobResult
+    parameters:
+    - name: jobId
+      in: path
+      value: $steps.executeJob.outputs.jobId
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: createQuoteFromResult
+    description: >-
+      Promote the reviewed extraction into a quote. Extraction is probabilistic —
+      confirm the fields with a human before this step.
+    operationId: createSlipExtractionQuoteFromJobResult
+    parameters:
+    - name: jobId
+      in: path
+      value: $steps.executeJob.outputs.jobId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      quoteId: $response.body#/quoteId
+  - stepId: confirmQuote
+    description: Read the resulting quote back before pricing it.
+    operationId: getQuoteDetail
+    parameters:
+    - name: quoteId
+      in: path
+      value: $steps.createQuoteFromResult.outputs.quoteId
+    successCriteria:
+    - condition: $statusCode == 200
+  outputs:
+    quoteId: $steps.createQuoteFromResult.outputs.quoteId

@@ -8,6 +8,49 @@ review:
   reviewer: API Evangelist
   homeMarket: United Kingdom
   gated: true
+enrichment:
+  round: '2026-07-25'
+  outcome: >-
+    The round-one conclusion — "no spec, nothing harvestable" — was too early.
+    Ki's own broker platform ships a complete endpoint registry in its public
+    JavaScript bundle at https://app.ki-insurance.com/assets/index-DgeF7w2c.js,
+    along with the request helpers that call it. That yielded a real, observed
+    HTTP surface: 102 paths and 109 operations across quotes, quote lines,
+    algorithmic pricing, schedules of value, slip extraction, leads, pipeline,
+    users, broking houses, nominated leads, Lloyd's risk codes and 38
+    class-of-business master-data lookups. Paths, HTTP methods, query-parameter
+    names, the bearer scheme, JSON content negotiation and the 401/403/503
+    semantics are all verbatim observations; request and response schemas are
+    NOT published by Ki and were deliberately left unspecified.
+  api_host_note: >-
+    api.ki.com — the OAuth audience published in the platform runtime config —
+    was probed this round and is a parked "Site Not Configured" page. It is an
+    audience identifier, not a reachable host. auth.ki-insurance.com, recorded as
+    a 404 in round one, is in fact a live Express login/logout shim in front of
+    Auth0 (GET /login returns 400 "Missing 'return_to' query parameter", GET
+    /logout 302s to the Auth0 tenant).
+  derived_specification:
+    file: openapi/ki-insurance-broker-platform-openapi.yml
+    provenance: >-
+      API Evangelist derivation from Ki's published client bundle. NOT a
+      Ki-published contract and must not be presented as one.
+    paths: 102
+    operations: 109
+  new_negatives_confirmed:
+  - /.well-known/security.txt is 404 on ki-insurance.com (RFC 9116 absent)
+  - /.well-known/api-catalog and /ai-plugin.json are 404
+  - /llms.txt is 404
+  - status.ki-insurance.com and trust.ki-insurance.com do not resolve
+  - no vulnerability-disclosure programme and no trust centre (probed)
+  - no first-party SDK on npm, PyPI, Maven Central, NuGet, RubyGems or crates.io
+  - no idempotency contract anywhere in the platform bundle
+  - no pagination parameters on any list operation
+  - no event, webhook or streaming surface (the only EventSource use is the
+    LaunchDarkly SDK)
+  new_positives_confirmed:
+  - Website terms and privacy policy PDFs served from app.ki-insurance.com
+  - RFC 8414 OAuth authorization-server metadata and JWKS at the Auth0 tenant
+  - TLS 1.3 and HSTS on both hosts (DMARC p=none, no DNSSEC, no CAA)
 findings:
   summary: |
     Ki Insurance (Lloyd's Syndicate 1618) has a real machine-to-machine API —

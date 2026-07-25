@@ -1,0 +1,96 @@
+generated: '2026-07-25'
+method: searched
+source: live probe of every Ki host
+summary: >-
+  Ki publishes no security.txt, no api-catalog and no ai-plugin.json. The only
+  real .well-known surface is the Auth0 tenant at login.ki-insurance.com, which
+  serves OIDC discovery, the RFC 8414 OAuth authorization-server metadata and
+  the JWKS anonymously. Every 200 returned by app.ki-insurance.com under
+  /.well-known/ is the single-page app's HTML catch-all, not a document — those
+  are recorded below as false positives so a future round does not re-chase them.
+hosts:
+- host: https://login.ki-insurance.com
+  role: Auth0 tenant / OIDC issuer for the partner-gated broker platform
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: ki-insurance-openid-configuration.json
+    spec: OpenID Connect Discovery 1.0
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: ki-insurance-oauth-authorization-server.json
+    spec: RFC 8414 OAuth 2.0 Authorization Server Metadata
+  - path: /.well-known/jwks.json
+    status: 200
+    file: ki-insurance-jwks.json
+    spec: RFC 7517 JSON Web Key Set
+  - path: /.well-known/security.txt
+    status: 404
+- host: https://ki-insurance.com
+  role: Corporate marketing site (Next.js)
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /robots.txt
+    status: 200
+    note: 'User-agent: * / Disallow: (empty) — nothing excluded, no sitemap directive.'
+  - path: /llms.txt
+    status: 404
+- host: https://app.ki-insurance.com
+  role: Partner-gated broker trading platform (single-page app)
+  note: >-
+    This host serves index.html for any unmatched path, so every /.well-known/
+    request returns HTTP 200 with an HTML body. None of these are documents.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    false_positive: true
+    note: SPA index.html, not RFC 9116 text.
+  - path: /.well-known/openid-configuration
+    status: 200
+    false_positive: true
+    note: SPA index.html, not OIDC discovery JSON.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    false_positive: true
+    note: SPA index.html, not RFC 9728 metadata.
+  - path: /llms.txt
+    status: 200
+    false_positive: true
+    note: SPA index.html.
+- host: https://auth.ki-insurance.com
+  role: Ki's own login/logout shim in front of Auth0 (Express service)
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /login
+    status: 400
+    note: "Responds `Missing 'return_to' query parameter.` — a real endpoint, not a 404 page."
+  - path: /logout
+    status: 302
+    note: Redirects to https://login.ki-insurance.com/v2/logout — confirms the Auth0 tenant.
+- host: https://api.ki.com
+  role: OAuth audience string published in the broker platform runtime config
+  note: >-
+    Probed because it is the token audience. The host resolves but returns a
+    parked "Site Not Configured | 404 Not Found" page for /, /openapi.json,
+    /swagger.json, /docs, /v1/openapi.json, /graphql and
+    /.well-known/oauth-protected-resource. It is an audience identifier, not a
+    reachable Ki API host.
+  documents:
+  - path: /
+    status: 404
+  - path: /openapi.json
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404

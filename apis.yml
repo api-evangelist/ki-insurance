@@ -13,14 +13,18 @@ description: >-
   the Room. Brokers reach Ki through app.ki-insurance.com, a partner-gated
   single-page platform behind an Auth0 authorization-code login, and Ki announced a
   "Broker API" in May 2021 that lets partner broking platforms request quotes
-  directly from the algorithm. That API posture is entirely partner-gated. There is
+  directly from the algorithm. That API posture is entirely partner-gated: there is
   no developer portal, no public reference documentation, no self-serve signup, no
-  downloadable OpenAPI or Postman collection, and no public webhook or event
-  catalog. Every probed developer host — developer., developers., docs., api., and
-  the /developers, /api, /partners, /integrations paths — fails to resolve or
-  returns 404. Ki is a clear example of the United Kingdom's London-market pattern.
-  It is genuinely advanced machine-to-machine insurance placement infrastructure,
-  aimed at brokers and syndicates rather than at developers, and therefore
+  provider-published OpenAPI or Postman collection, and no public webhook or event
+  catalog. What is observable is the platform API itself — Ki's own broker client
+  ships a complete endpoint registry in its public JavaScript bundle, exposing a
+  same-origin REST surface of roughly a hundred JSON operations across quotes,
+  quote lines, pricing, schedules of values, slip extraction, leads, pipeline,
+  broking houses, nominated leads and Lloyd's risk codes, all authorised with an
+  Auth0 bearer token. API Evangelist has derived an observed OpenAPI from that
+  bundle. Ki remains the archetype of the United Kingdom's London-market pattern:
+  genuinely advanced machine-to-machine insurance placement infrastructure, aimed
+  at brokers and syndicates rather than at developers, and therefore effectively
   invisible from the outside.
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
@@ -37,7 +41,51 @@ tags:
 created: '2026-07-25'
 modified: '2026-07-25'
 specificationVersion: '0.19'
-apis: []
+apis:
+- aid: ki-insurance:broker-platform
+  name: Ki Broker Trading Platform API
+  description: >-
+    The same-origin REST API behind app.ki-insurance.com, the partner-gated broker
+    trading platform where Lloyd's brokers place risks with Ki's follow algorithm.
+    Ki publishes no reference documentation for it; the surface catalogued here was
+    observed verbatim in the endpoint registry Ki's own client ships in its public
+    JavaScript bundle — 102 paths and 109 operations covering quote creation and
+    versioning, algorithmic pricing runs, schedule-of-values upload and geocoding,
+    slip extraction jobs, firm order notes, the broker pipeline and dashboard,
+    leads, users, broking houses and branches, nominated lead syndicates and
+    insurers, Lloyd's risk codes and a large class-of-business master-data surface.
+    Every call carries an Auth0-issued bearer token (issuer
+    https://login.ki-insurance.com/, audience https://api.ki.com); there is no
+    self-serve access.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Insurance
+  - Underwriting
+  - Quotes
+  - Lloyd's of London
+  - Broker
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-broker-platform-openapi.yml
+  - type: Overlay
+    url: overlays/ki-insurance-broker-platform-overlay.yaml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: MCPServer
+    url: mcp/ki-insurance-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
 common:
 - type: Website
   url: https://ki-insurance.com/
@@ -49,12 +97,54 @@ common:
   url: https://ki-insurance.com/capacity-partners/
 - type: SignUp
   url: https://app.ki-insurance.com/
+- type: TermsOfService
+  url: https://app.ki-insurance.com/policies/2025/11/16/Ki_Website_Terms.pdf
+- type: PrivacyPolicy
+  url: https://app.ki-insurance.com/policies/2025/V2/Ki_Privacy_Policy.pdf
+- type: CookiePolicy
+  url: https://app.ki-insurance.com/policies/2025/Ki_Cookie_Policy.pdf
 - type: Authentication
+  url: authentication/ki-insurance-authentication.yml
+- type: OpenIDConnect
   url: https://login.ki-insurance.com/.well-known/openid-configuration
+- type: OAuthScopes
+  url: scopes/ki-insurance-scopes.yml
+- type: WellKnown
+  url: well-known/ki-insurance-well-known.yml
+- type: DomainSecurity
+  url: security/ki-insurance-domain-security.yml
+- type: Conformance
+  url: conformance/ki-insurance-conformance.yml
+- type: Lifecycle
+  url: lifecycle/ki-insurance-lifecycle.yml
+- type: Conventions
+  url: conventions/ki-insurance-conventions.yml
+- type: ErrorCatalog
+  url: errors/ki-insurance-problem-types.yml
+- type: DataModel
+  url: data-model/ki-insurance-data-model.yml
+- type: LLMsTxt
+  url: llms/ki-insurance-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: MCPServer
+  url: mcp/ki-insurance-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/ki-insurance-tool-crosswalk.yml
+- type: AgenticAccess
+  url: agentic-access/ki-insurance-agentic-access.yml
+- type: Arazzo
+  name: Quote a risk and run the follow algorithm
+  url: arazzo/ki-insurance-quote-and-price.yml
+- type: Arazzo
+  name: Turn a broker slip into a quote
+  url: arazzo/ki-insurance-slip-to-quote.yml
 - type: GitHubOrganization
   url: https://github.com/Ki-Insurance
 - type: LinkedIn
   url: https://www.linkedin.com/company/ki-insurance
+- type: Careers
+  url: https://ki-insurance.com/careers/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

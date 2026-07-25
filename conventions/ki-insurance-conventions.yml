@@ -1,0 +1,136 @@
+generated: '2026-07-25'
+method: derived
+source: https://app.ki-insurance.com/assets/index-DgeF7w2c.js
+also_derived_from:
+- openapi/ki-insurance-broker-platform-openapi.yml
+- https://login.ki-insurance.com/.well-known/openid-configuration
+summary: >-
+  Ki publishes no developer documentation, so every convention below was read out
+  of the request helpers in Ki's own broker platform bundle. Nothing here is
+  inferred from a similar API; where Ki has no convention, that absence is
+  recorded rather than filled in.
+authentication:
+  style: bearer
+  header: 'Authorization: Bearer <Auth0 JWT>'
+  issuer: https://login.ki-insurance.com/
+  audience: https://api.ki.com
+  credentials_mode: same-origin
+  see: authentication/ki-insurance-authentication.yml
+content_negotiation:
+  request_content_type: application/json
+  accept: application/json
+  json_body: JSON.stringify of the request object
+  binary_uploads: >-
+    FormData/File bodies (schedule-of-values spreadsheets, slip PDFs) are sent
+    through a second helper that omits Content-Type and lets the browser set the
+    multipart boundary; Accept stays application/json.
+  alternate_accept:
+  - operation: createPipelineCsv
+    accept: application/csv
+    note: The pipeline export sends Accept application/csv with a JSON body.
+  response_handling: >-
+    The client parses the body as JSON when the response Content-Type contains
+    "json" and otherwise falls back to a Blob — which is how quote PDFs and CSV
+    exports come back.
+base_url:
+  style: same-origin
+  value: https://app.ki-insurance.com
+  prefix: /api
+  note: >-
+    The client builds every request with `new URL(path, window.location.origin)`.
+    There is no separate API host, no gateway hostname and no CORS surface; the
+    API is only reachable from the broker application origin.
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No Idempotency-Key header, no client-generated request id and no retry-safe
+    write convention appears anywhere in the platform bundle. Repeat POSTs to
+    /api/quote or /api/quote/{quoteId}/version are not protected by any published
+    idempotency contract. This is a genuine gap, not an unobserved one — the
+    string "idempoten" does not occur in the bundle at all.
+pagination:
+  supported: false
+  note: >-
+    No cursor, offset, page, limit or per_page parameter appears in the observed
+    endpoint registry. List operations (/api/user, /api/leads, /api/pipeline,
+    /api/cob and the master-data lookups) return unpaginated collections; the
+    dashboard operations window by `days` instead.
+filtering:
+  style: query-parameters
+  observed:
+  - {operation: getPipeline, param: useDomainModelBasedIndications}
+  - {operation: getDashboardIndications, params: [days, useDomainModelBasedIndications, statuses]}
+  - {operation: getDashboardRenewals, params: [days, useDomainModelBasedIndications, statuses]}
+  - {operation: getRiskCodes, params: [nominatedLeadsOnly, inceptionDate, nonExcess]}
+  - {operation: getExclusionClausesList, params: [cobId, facilityId]}
+  - {operation: getFacilityAttestations, params: [facilityId, cobId]}
+  - {operation: getMasterdataCompliance, params: [iso2, query]}
+  - {operation: getBrokingHouseSuggest, param: query}
+  - {operation: getMasterdataPlacingbases, param: filter}
+  note: >-
+    `statuses` is sent as a comma-joined list. Boolean query values are sent as
+    JavaScript booleans stringified to "true"/"false".
+versioning:
+  scheme: per-resource path segment
+  note: >-
+    There is no global API version. A `v2` segment appears on exactly three
+    surfaces — /api/quote/v2/{quoteId}/firm-order-note,
+    /api/nominatedlead/v2/cob/{classOfBusinessId} and /api/vessel/v2/validate —
+    plus an /api/indications/v2/suggestions-all variant selected by a
+    LaunchDarkly feature flag. Everything else is unversioned.
+  feature_flags: >-
+    Ki gates API behaviour with LaunchDarkly flags client-side
+    (useDomainModelBasedIndications, the indications v2 suggestions path). The
+    same endpoint can therefore change shape without a version change.
+  deprecation_policy: null
+error_envelope:
+  format: unpublished
+  problem_json: false
+  note: >-
+    Ki does not publish an error schema and the client does not parse one — it
+    branches on HTTP status alone. See errors/ki-insurance-problem-types.yml for
+    the status semantics that ARE observable.
+  status_semantics:
+    401: Session invalid or expired. The client clears its token cache, pushes a
+      logout state and reloads.
+    403: Not entitled. The client routes the user to a forbidden page.
+    503: Platform maintenance mode. The client routes the user to a maintenance
+      page. Maintenance state is itself an API — GET/PUT /api/system/admin/maintenance-mode.
+rate_limiting:
+  documented: false
+  headers_observed: []
+  note: No rate-limit headers are read by the client and no limits are published.
+request_tracing:
+  request_id_header: null
+  note: >-
+    No X-Request-Id or correlation header is set by the client. Ki instruments
+    the front end instead, posting to /api/frontend-metrics and
+    /api/user-journey-events, alongside third-party Hotjar/Mixpanel/Intercom SDKs.
+long_running_operations:
+  style: client polling
+  cases:
+  - operation: updateQuoteStartPricing
+    note: >-
+      Pricing is asynchronous. The runtime config publishes GET_PRICING_INTERVAL
+      (5) and GET_PRICING_TIMEOUT (90), i.e. the client polls quote detail every
+      5 seconds for up to 90 seconds after starting a pricing run.
+  - operation: createQuoteProcessSov
+    note: Schedule-of-values geocoding is submitted as a job and polled.
+  - operation: getSlipExtractionJobStatus
+    note: >-
+      Slip extraction is a three-step job — create upload, execute job, poll
+      status — before a quote can be created from the result.
+  webhooks: none
+concurrency:
+  optimistic_locking: false
+  note: >-
+    Quotes are versioned by explicit resource creation
+    (POST /api/quote/{quoteId}/version) rather than by ETag/If-Match. No
+    conditional-request headers are used.
+cross_links:
+  errors: errors/ki-insurance-problem-types.yml
+  lifecycle: lifecycle/ki-insurance-lifecycle.yml
+  authentication: authentication/ki-insurance-authentication.yml
+  scopes: scopes/ki-insurance-scopes.yml
+  data_model: data-model/ki-insurance-data-model.yml

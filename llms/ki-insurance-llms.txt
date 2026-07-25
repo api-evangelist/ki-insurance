@@ -1,0 +1,55 @@
+# Ki Insurance
+
+> Ki is Lloyd's Syndicate 1618 — the first fully digital, algorithmically driven syndicate at Lloyd's of London, launched in 2020 out of Brit with Google Cloud and University College London and capitalised with US$500m from Blackstone Tactical Opportunities and Fairfax Financial. Ki writes follow-only capacity across property, casualty and specialty lines, quoting risks a lead underwriter has already priced in seconds rather than days. Its API surface is real but entirely partner-gated: no developer portal, no reference documentation, no self-serve signup.
+
+Generated: 2026-07-25. Method: generated (Ki publishes no llms.txt — /llms.txt is 404 on ki-insurance.com and an SPA catch-all on app.ki-insurance.com).
+
+## What is actually available
+
+Ki announced a "Broker API" on 4 May 2021 that lets partner broking platforms request follow-capacity quotes directly from its algorithm. Ki publishes nothing about it. What IS observable is the broker trading platform's own API: Ki's single-page app at app.ki-insurance.com ships a complete endpoint registry in its public JavaScript bundle, from which API Evangelist derived an OpenAPI of 102 paths and 109 operations. That spec is an API Evangelist derivation, not a Ki document, and every operation requires partner-gated Auth0 credentials.
+
+- Access model: Auth0 authorization-code login, issuer https://login.ki-insurance.com/, audience https://api.ki.com, `Authorization: Bearer <JWT>` on every call
+- Base URL: https://app.ki-insurance.com (same-origin `/api` surface — no separate API host)
+- No API keys, no sandbox, no test credentials, no self-serve access
+
+## APIs
+
+- [Ki Broker Trading Platform API](https://app.ki-insurance.com/): the partner-gated REST surface behind the broker platform — quotes, quote lines, algorithmic pricing, schedules of value, slip extraction, leads, pipeline, broking houses, nominated leads, Lloyd's risk codes and class-of-business master data
+
+## Specs
+
+- [OpenAPI (derived)](openapi/ki-insurance-broker-platform-openapi.yml): 102 paths / 109 operations observed verbatim in the published client bundle; paths, methods and query parameters are real, request/response schemas are deliberately unspecified because Ki does not publish them
+- [Overlay](overlays/ki-insurance-broker-platform-overlay.yaml): the API Evangelist assessment layer over that spec
+
+## Artifacts
+
+- [Authentication](authentication/ki-insurance-authentication.yml): Auth0 OIDC/OAuth 2.0 profile, endpoints, grants, PKCE, MFA posture
+- [OAuth scopes](scopes/ki-insurance-scopes.yml): standard OIDC scopes only — no Ki business scopes are published
+- [Well-known](well-known/ki-insurance-well-known.yml): every probed discovery path with its status, including the SPA catch-all false positives
+- [Conventions](conventions/ki-insurance-conventions.yml): bearer auth, JSON content negotiation, no idempotency, no pagination, per-resource v2 versioning, polling for async work
+- [Error catalog](errors/ki-insurance-problem-types.yml): the 401/403/503 semantics Ki's client implements; no problem+json, no error registry
+- [Lifecycle](lifecycle/ki-insurance-lifecycle.yml): no versioning policy, no deprecation policy, no SLA, no status page
+- [Conformance](conformance/ki-insurance-conformance.yml): OAuth 2.0/OIDC/PKCE/JWKS yes; FAPI, RFC 9457, security.txt, ACORD no
+- [Data model](data-model/ki-insurance-data-model.yml): the entity graph derived from the URL space — Quote at the centre, ClassOfBusiness as the spine
+- [Domain security](security/ki-insurance-domain-security.yml): TLS 1.3 and HSTS on both hosts; no DNSSEC, no CAA, DMARC p=none
+- [Agentic access](agentic-access/ki-insurance-agentic-access.yml): recommended x-agentic-access contracts for all 109 operations
+- [MCP (candidate)](mcp/ki-insurance-mcp.yml) and [tool crosswalk](mcp/ki-insurance-tool-crosswalk.yml): Ki publishes no MCP server; this is the candidate agent surface and what it would leave unreachable
+- [Agent skills](skills/_index.yml): four generated skills — quote and price, slip to quote, indication to firm order note, pipeline review
+
+## Company
+
+- [Website](https://ki-insurance.com/)
+- [About](https://ki-insurance.com/about/)
+- [News](https://ki-insurance.com/news/)
+- [Capacity partners](https://ki-insurance.com/capacity-partners/)
+- [Schedule of values tool](https://ki-insurance.com/sov/)
+- [Careers](https://ki-insurance.com/careers/)
+- [Broker platform login](https://app.ki-insurance.com/)
+- [GitHub](https://github.com/Ki-Insurance)
+- [LinkedIn](https://www.linkedin.com/company/ki-insurance)
+- [Website terms](https://app.ki-insurance.com/policies/2025/11/16/Ki_Website_Terms.pdf)
+- [Privacy policy](https://app.ki-insurance.com/policies/2025/V2/Ki_Privacy_Policy.pdf)
+
+## What does not exist
+
+Recorded so nobody re-chases it: no developer portal (developer., developers., docs., api., platform., broker-api., sandbox.ki-insurance.com all fail DNS; /developers, /api, /developer, /partners, /integrations, /brokers all 404), no Postman collection, no GraphQL (/graphql returns the SPA's HTML), no gRPC, no webhooks or events or AsyncAPI, no SDKs on npm/PyPI/Maven/NuGet/RubyGems, no CLI, no changelog, no status page, no security.txt, no bug bounty, no trust centre or published certifications, and no ACORD/AL3/NGDS/IVANS reference anywhere. The single open-standards signal Ki emits is a GitHub fork of OasisLMF/OpenDataTransform (OED catastrophe exposure data).

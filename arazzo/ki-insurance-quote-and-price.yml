@@ -1,0 +1,124 @@
+arazzo: 1.0.1
+info:
+  title: Ki — quote a risk and run the follow algorithm
+  version: 1.0.0
+  description: >-
+    Create a quote on Ki's partner-gated broker platform, attach the schedule of
+    values, geocode it, run Ki's algorithmic pricing and retrieve the priced
+    quote document. Every operationId below exists verbatim in the referenced
+    OpenAPI, which is an API Evangelist derivation from Ki's published client
+    bundle. Running this workflow requires partner Auth0 credentials — Ki has no
+    sandbox and no self-serve signup, so no example inputs are seeded.
+sourceDescriptions:
+- name: kiBrokerPlatform
+  url: ../openapi/ki-insurance-broker-platform-openapi.yml
+  type: openapi
+workflows:
+- workflowId: quote-and-price
+  summary: Create, complete, price and download a Ki follow quote.
+  description: >-
+    Ki writes follow-only capacity, so the workflow starts by confirming the
+    class of business and its nominated lead before a quote is created. Pricing
+    is asynchronous with no webhook — step 8 is a polling step.
+  inputs:
+    type: object
+    required: [classOfBusinessId, inceptionDate]
+    properties:
+      classOfBusinessId:
+        type: string
+        description: The Ki class of business the risk falls under.
+      inceptionDate:
+        type: string
+        description: Inception date used to filter Lloyd's risk codes.
+      quotePayload:
+        type: object
+        description: Risk details. Ki publishes no schema for this body.
+      sovFile:
+        type: string
+        description: Schedule-of-values spreadsheet, sent as a multipart body.
+  steps:
+  - stepId: whoami
+    description: Confirm the authenticated broker user, their broking house and entitlements.
+    operationId: getUserCurrent
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: listClassesOfBusiness
+    description: List the classes of business Ki writes.
+    operationId: getClassOfBusiness
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: checkNominatedLead
+    description: Confirm Ki follows a nominated lead on this class of business.
+    operationId: getSyndicateNominatedSyndicateByClassOfBusiness
+    parameters:
+    - name: classOfBusinessId
+      in: path
+      value: $inputs.classOfBusinessId
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: listRiskCodes
+    description: Retrieve Lloyd's risk codes for the class of business and inception date.
+    operationId: getRiskCodes
+    parameters:
+    - name: classOfBusinessId
+      in: path
+      value: $inputs.classOfBusinessId
+    - name: inceptionDate
+      in: query
+      value: $inputs.inceptionDate
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: createQuote
+    description: Create the quote.
+    operationId: createQuote
+    requestBody:
+      contentType: application/json
+      payload: $inputs.quotePayload
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      quoteId: $response.body#/quoteId
+  - stepId: uploadScheduleOfValues
+    description: Attach the schedule of values (multipart; skip for lines with no SOV).
+    operationId: createQuoteSov
+    parameters:
+    - name: quoteId
+      in: path
+      value: $steps.createQuote.outputs.quoteId
+    requestBody:
+      contentType: multipart/form-data
+      payload: $inputs.sovFile
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: startPricing
+    description: Run Ki's follow algorithm against the quote.
+    operationId: updateQuoteStartPricing
+    parameters:
+    - name: quoteId
+      in: path
+      value: $steps.createQuote.outputs.quoteId
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: pollForPrice
+    description: >-
+      Poll quote detail until the price lands. Ki's own client polls every 5
+      seconds for up to 90 seconds (GET_PRICING_INTERVAL / GET_PRICING_TIMEOUT).
+      There is no webhook.
+    operationId: getQuoteDetail
+    parameters:
+    - name: quoteId
+      in: path
+      value: $steps.createQuote.outputs.quoteId
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: downloadQuoteDocument
+    description: Download the quote PDF. The response is binary, not JSON.
+    operationId: getQuotePdf
+    parameters:
+    - name: quoteId
+      in: path
+      value: $steps.createQuote.outputs.quoteId
+    successCriteria:
+    - condition: $statusCode == 200
+  outputs:
+    quoteId: $steps.createQuote.outputs.quoteId

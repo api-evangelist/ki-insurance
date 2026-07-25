@@ -1,0 +1,87 @@
+generated: '2026-07-25'
+method: searched
+source: https://login.ki-insurance.com/.well-known/openid-configuration
+docs: https://login.ki-insurance.com/.well-known/openid-configuration
+summary: >-
+  Ki's authorization server publishes only the standard OpenID Connect scopes.
+  No Ki business scope (quote:read, quote:write, pipeline:read or similar) is
+  advertised anywhere on the public surface, and none appears in the platform
+  client bundle — the broker app requests a token for audience
+  https://api.ki.com and authorises every /api call with that single bearer
+  token. Any partner-specific scope model, if one exists, is private.
+schemes:
+- name: auth0OAuth2
+  source: https://login.ki-insurance.com/.well-known/openid-configuration
+  audience: https://api.ki.com
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://login.ki-insurance.com/authorize
+    tokenUrl: https://login.ki-insurance.com/oauth/token
+scopes:
+- scope: openid
+  description: Standard OIDC scope — request an ID token for the authenticated broker user.
+  flows: [authorizationCode]
+  sources: [https://login.ki-insurance.com/.well-known/openid-configuration]
+- scope: profile
+  description: Standard OIDC scope — name, nickname and picture claims.
+  flows: [authorizationCode]
+  sources: [https://login.ki-insurance.com/.well-known/openid-configuration]
+- scope: email
+  description: Standard OIDC scope — email and email_verified claims.
+  flows: [authorizationCode]
+  sources: [https://login.ki-insurance.com/.well-known/openid-configuration]
+- scope: offline_access
+  description: Standard OAuth scope — issue a refresh token for the broker session.
+  flows: [authorizationCode]
+  sources: [https://login.ki-insurance.com/.well-known/openid-configuration]
+- scope: address
+  description: Standard OIDC scope — address claim.
+  flows: [authorizationCode]
+  sources: [https://login.ki-insurance.com/.well-known/openid-configuration]
+- scope: phone
+  description: Standard OIDC scope — phone_number claim.
+  flows: [authorizationCode]
+  sources: [https://login.ki-insurance.com/.well-known/openid-configuration]
+- scope: name
+  description: Auth0 profile sub-scope — name claim.
+  flows: [authorizationCode]
+  sources: [https://login.ki-insurance.com/.well-known/openid-configuration]
+- scope: given_name
+  description: Auth0 profile sub-scope — given_name claim.
+  flows: [authorizationCode]
+  sources: [https://login.ki-insurance.com/.well-known/openid-configuration]
+- scope: family_name
+  description: Auth0 profile sub-scope — family_name claim.
+  flows: [authorizationCode]
+  sources: [https://login.ki-insurance.com/.well-known/openid-configuration]
+- scope: nickname
+  description: Auth0 profile sub-scope — nickname claim.
+  flows: [authorizationCode]
+  sources: [https://login.ki-insurance.com/.well-known/openid-configuration]
+- scope: picture
+  description: Auth0 profile sub-scope — picture claim.
+  flows: [authorizationCode]
+  sources: [https://login.ki-insurance.com/.well-known/openid-configuration]
+- scope: email_verified
+  description: Auth0 profile sub-scope — email_verified claim.
+  flows: [authorizationCode]
+  sources: [https://login.ki-insurance.com/.well-known/openid-configuration]
+- scope: created_at
+  description: Auth0 profile sub-scope — created_at claim.
+  flows: [authorizationCode]
+  sources: [https://login.ki-insurance.com/.well-known/openid-configuration]
+- scope: identities
+  description: Auth0 profile sub-scope — linked identities claim.
+  flows: [authorizationCode]
+  sources: [https://login.ki-insurance.com/.well-known/openid-configuration]
+authorization_model:
+  note: >-
+    Authorisation inside the Ki platform is role- and entitlement-based rather
+    than scope-based. The client bundle carries an admin surface
+    (/api/system/admin/*, /api/maxlinesizes, bulk user management) and a
+    per-user class-of-business entitlement (/api/user/{userId}/selected-cobs),
+    which implies server-side role checks — the 403 handling in the client
+    confirms it. None of that is published as OAuth scopes.
+gaps:
+- No Ki-specific API scopes are published.
+- No scope-to-operation mapping exists; do not infer one.

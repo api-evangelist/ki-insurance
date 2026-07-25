@@ -1,0 +1,35 @@
+generated: '2026-07-25'
+method: generated
+source: openapi/ki-insurance-broker-platform-openapi.yml
+note: >-
+  Ki publishes no AGENTS.md, no skill files and no agent guidance of any kind —
+  searched across ki-insurance.com, the platform bundle and github.com/Ki-Insurance.
+  These skills are API Evangelist generations, grounded operation-by-operation in
+  the observed OpenAPI. Every operationId referenced exists verbatim in that spec.
+  All of them require partner-gated Auth0 credentials to run.
+skills:
+- file: ki-insurance-quote-and-price.md
+  name: Quote a risk and run Ki's follow algorithm
+  api: openapi/ki-insurance-broker-platform-openapi.yml
+  operations: [getUserCurrent, getClassOfBusiness, getSyndicateNominatedSyndicateByClassOfBusiness,
+    getRiskCodes, createQuote, updateQuoteById, createQuoteSov, createQuoteProcessSov,
+    updateQuoteStartPricing, getQuoteDetail, getQuotePdf]
+- file: ki-insurance-slip-to-quote.md
+  name: Turn a broker slip into a Ki quote
+  api: openapi/ki-insurance-broker-platform-openapi.yml
+  operations: [createSlipExtractionUpload, createSlipExtractionExecuteSlipExtractionJob,
+    getSlipExtractionJobStatus, getSlipExtractionJobResult,
+    createSlipExtractionQuoteFromJobResult, getQuoteDetail]
+- file: ki-insurance-indication-to-firm-order.md
+  name: Take an indication through to a firm order note
+  api: openapi/ki-insurance-broker-platform-openapi.yml
+  human_in_the_loop: required
+  operations: [getQuoteIndicationSuggestions, createQuoteFromIndication, getQuoteDetail,
+    updateQuoteStartPricing, getQuoteFonCcEmails, createQuoteFirmOrderNoteV2,
+    updateQuoteDiscard]
+- file: ki-insurance-pipeline-review.md
+  name: Review the Ki broker pipeline
+  api: openapi/ki-insurance-broker-platform-openapi.yml
+  operations: [getUserCurrent, getPipelineList, getDashboardIndications,
+    getDashboardRenewals, getLeadsList, getLeadsLead, createLeadsActivate,
+    createPipelineCsv]

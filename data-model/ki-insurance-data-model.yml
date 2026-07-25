@@ -1,0 +1,173 @@
+generated: '2026-07-25'
+method: derived
+source: openapi/ki-insurance-broker-platform-openapi.yml
+also_derived_from: https://app.ki-insurance.com/assets/index-DgeF7w2c.js
+summary: >-
+  Ki publishes no object reference and no schemas, so this entity graph is derived
+  purely from the shape of the observed URL space — which resources exist, which
+  are nested under which, and which identifiers are passed where. Attributes are
+  deliberately absent: they are not observable and are not invented.
+domain: >-
+  Follow-only specialty underwriting at Lloyd's. A broker brings a risk that a
+  lead underwriter has already priced; Ki's algorithm decides whether and at what
+  line size to follow. The graph therefore centres on the Quote, not on a policy —
+  policy issuance stays with the lead and the Lloyd's market processes.
+entities:
+- name: Quote
+  path_root: /api/quote
+  identifier: quoteId
+  description: >-
+    The central object. Created directly, from an indication, or from a slip
+    extraction job result. Carries quote lines, an optional schedule of values,
+    an algorithmic pricing run, a generated PDF and a firm order note.
+  operations: [createQuote, getQuoteById, updateQuoteById, createQuoteVersion,
+    updateQuoteDiscard, updateQuoteStartPricing, getQuotePdf, getQuoteDetail,
+    getQuoteCoverageOptionMapping, createQuoteFirmOrderNoteV2]
+- name: QuoteVersion
+  path_root: /api/quote/{quoteId}/version
+  identifier: quoteId
+  description: An explicit new version of a quote. Ki versions by creating a resource,
+    not by ETag/If-Match concurrency control.
+  operations: [createQuoteVersion]
+- name: QuoteLine
+  path_root: /api/quote/{quoteId}/quoteline/{quoteLineId}
+  identifier: quoteLineId
+  description: A line within a quote — the unit Ki writes capacity against and the unit
+    schedule-of-values geocoding is scoped to.
+  operations: [deleteQuote, createQuoteProcessSov]
+- name: Indication
+  path_root: /api/indications
+  identifier: indicationId
+  description: >-
+    A pre-quote signal for an insured. Suggestions are searched by insured name,
+    domicile country and class of business; an indication can be promoted into a
+    quote. Consent/affirmation endpoints exist alongside it.
+  operations: [getQuoteIndicationSuggestions, getIndicationSuggestionsLegacy,
+    createQuoteFromIndication, getDashboardIndications]
+- name: ScheduleOfValues
+  path_root: /api/quote/{quoteId}/sov
+  identifier: quoteId
+  description: >-
+    The property exposure schedule uploaded against a quote — Ki's public /sov/
+    marketing page describes the same tool. Upload, replace, geocode, then delete
+    the derived property summary data. Uploads are multipart, brokered through a
+    Flatfile-backed import surface ("otto-sov").
+  operations: [createQuoteSov, updateQuoteSov, createQuoteProcessSov,
+    createOttoSovStart, deleteOttoSovPropertySummaryData]
+- name: SlipExtractionJob
+  path_root: /api/slip-extractions/jobs
+  identifier: jobId
+  description: >-
+    Document-understanding pipeline that turns a broker slip into structured quote
+    input. Three steps — create upload, execute job, poll status — then create a
+    quote from the result.
+  operations: [createSlipExtractionUpload, createSlipExtractionExecuteSlipExtractionJob,
+    getSlipExtractionJobStatus, getSlipExtractionJobResult,
+    createSlipExtractionQuoteFromJobResult]
+- name: Lead
+  path_root: /api/leads
+  identifier: leadId
+  description: An inbound opportunity that can be activated into the broker's working pipeline.
+  operations: [getLeadsList, getLeadsLead, createLeadsActivate]
+- name: Pipeline
+  path_root: /api/pipeline
+  description: The broker's working list of quotes, exportable as CSV.
+  operations: [getPipelineList, createPipelineCsv]
+- name: User
+  path_root: /api/user
+  identifier: userId
+  description: >-
+    A broker user of the platform. Users belong to a broking house, are entitled
+    to a set of classes of business, and are administered in bulk (register,
+    welcome email, delete).
+  operations: [getUserCurrent, getUserAll, createUserAll, updateUserWithId,
+    updateUserClassOfBusiness, createUserBulkUpload, createUserWelcomeEmail,
+    deleteUser, createUserResetPassword, createUserConsent]
+- name: BrokingHouse
+  path_root: /api/brokinghouse
+  identifier: brokingHouseId
+  description: >-
+    A Lloyd's broking firm. Type-ahead searchable, resolvable to a Lloyd's broker
+    id from broker code + pseudonym, and the parent of branches.
+  operations: [getBrokingHouseSuggest, getBrokingHouseLloydsBrokerId,
+    getClassOfBusinessBrokerClassOfBusiness, createBrokingHouseBranches,
+    updateBrokingHouseBranch, deleteBrokingHouseBranch]
+- name: Branch
+  path_root: /api/brokinghouse/{brokingHouseId}/branch/{branchId}
+  identifier: branchId
+  description: An office of a broking house. Optionally filtered to those with a valid TOBA.
+  operations: [createBrokingHouseBranches, updateBrokingHouseBranch, deleteBrokingHouseBranch]
+- name: ClassOfBusiness
+  path_root: /api/cob
+  identifier: classOfBusinessId
+  description: >-
+    The spine of the whole model. Almost every reference lookup, nominated-lead
+    query, risk-code query, facility query and master-data set is keyed by class
+    of business, and user entitlements are expressed as selected classes.
+  operations: [getClassOfBusiness, getClassOfBusinessBrokerClassOfBusiness,
+    updateUserClassOfBusiness, getRiskCodes, getCompanyMarketsConfig]
+- name: NominatedLead
+  path_root: /api/nominatedlead
+  description: >-
+    The lead syndicate or insurer whose price Ki follows. Queried per class of
+    business; the Lloyd's leaders list is the master set.
+  operations: [getSyndicateLloydsLeaders, getSyndicateNominatedSyndicateByClassOfBusiness,
+    getInsurerNominatedInsurerByClassOfBusiness, getCompanyMarketsConfig]
+- name: Facility
+  path_root: /api/facilities
+  identifier: facilityId
+  description: >-
+    Line slips, tracker/trigger markets, exclusion clauses and attestations — the
+    delegated-authority structures Ki writes through.
+  operations: [getFacilitiesLineslipMappings, getExclusionClausesList,
+    getFacilityAttestations, getSyndicateTrackerSyndicates, getConfigLineslips]
+- name: RiskCode
+  path_root: /api/risk/riskcode/{classOfBusinessId}
+  description: Lloyd's risk codes, filtered by nominated-lead-only, inception date and
+    non-excess flags.
+  operations: [getRiskCodes]
+- name: UniqueMarketReference
+  path_root: /api/umr/master-line-slip
+  description: >-
+    The Lloyd's Unique Market Reference / master line slip lookup. Present in the
+    client registry; its HTTP method could not be confirmed from the bundle.
+  operations: []
+- name: MasterData
+  path_root: /api/masterdata
+  description: >-
+    38 read-only reference sets that drive the quote forms — property perils,
+    occupancies and locations; cyber limits, deductibles, reinstatements, industry
+    sectors and war exclusions; contingency deductibles and event descriptions;
+    cargo interests; D&O and FI industry lists; PI limit types; energy-liability
+    employee bands; HQ country/US/Canada/Australia state lists; territories;
+    placing bases; and a compliance search keyed by ISO-2 country.
+  operations: [getMasterdataTerritories, getMasterdataCompliance, getMasterdataHqCountries]
+relationships:
+- {from: Quote, to: QuoteLine, type: has_many, via: quoteId}
+- {from: Quote, to: QuoteVersion, type: has_many, via: quoteId}
+- {from: Quote, to: ScheduleOfValues, type: has_one, via: quoteId}
+- {from: Quote, to: Indication, type: belongs_to, via: indicationId}
+- {from: Quote, to: SlipExtractionJob, type: belongs_to, via: jobId}
+- {from: Quote, to: ClassOfBusiness, type: belongs_to, via: classOfBusinessId}
+- {from: Quote, to: NominatedLead, type: belongs_to, via: classOfBusinessId}
+- {from: QuoteLine, to: ScheduleOfValues, type: has_one, via: quoteLineId}
+- {from: Lead, to: Quote, type: has_one, via: leadId}
+- {from: Pipeline, to: Quote, type: has_many, via: quoteId}
+- {from: User, to: BrokingHouse, type: belongs_to, via: brokingHouseId}
+- {from: User, to: ClassOfBusiness, type: has_many, via: selected-cobs}
+- {from: BrokingHouse, to: Branch, type: has_many, via: brokingHouseId}
+- {from: BrokingHouse, to: ClassOfBusiness, type: has_many, via: brokingHouseId}
+- {from: ClassOfBusiness, to: RiskCode, type: has_many, via: classOfBusinessId}
+- {from: ClassOfBusiness, to: NominatedLead, type: has_many, via: classOfBusinessId}
+- {from: ClassOfBusiness, to: Facility, type: has_many, via: cobId}
+- {from: ClassOfBusiness, to: MasterData, type: has_many, via: classOfBusinessId}
+- {from: Facility, to: NominatedLead, type: has_many, via: facilityId}
+identifier_conventions:
+  note: >-
+    Ki does not publish identifier formats or prefixes. Path parameter names in
+    the derived OpenAPI are assigned by API Evangelist from path semantics; the
+    minified bundle does not retain the originals.
+gaps:
+- No attributes, types or enumerations — Ki publishes no schemas.
+- No policy, bind, endorsement or claims entity is exposed; Ki is quote-and-follow only.
+- No FNOL or claims surface exists anywhere in the observed API.

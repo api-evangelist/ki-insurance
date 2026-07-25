@@ -1,0 +1,97 @@
+generated: '2026-07-25'
+method: derived
+source: mcp/ki-insurance-mcp.yml + openapi/ki-insurance-broker-platform-openapi.yml
+status: candidate
+summary: >-
+  Ki has no published MCP server and no GraphQL surface, so this crosswalk binds
+  the CANDIDATE tool set in mcp/ki-insurance-mcp.yml to the observed REST
+  operations it would be built on. Because every candidate tool is derived from a
+  REST operation, the binding is 1:1 and confidence is high by construction —
+  there are no mcp_only rows. The value of the file is the rest_only section: it
+  records how much of Ki's underwriting surface would remain unreachable to an
+  agent, and why.
+surfaces:
+  openapi:
+    file: openapi/ki-insurance-broker-platform-openapi.yml
+    gated: true
+    note: >-
+      Derived from the published client bundle, not from Ki. Calling any
+      operation requires partner Auth0 credentials.
+  graphql:
+    endpoint: null
+    note: >-
+      No GraphQL surface. /graphql on app.ki-insurance.com returns HTTP 200 with
+      the SPA's index.html — a catch-all false positive, explicitly rejected.
+  mcp:
+    url: null
+    gated: true
+    note: No hosted MCP server exists; tools/list could not be called.
+crosswalk:
+- {tool: search_indications, category: discovery, rest: [getQuoteIndicationSuggestions], binding: rest, confidence: high}
+- {tool: list_pipeline, category: discovery, rest: [getPipelineList], binding: rest, confidence: high}
+- {tool: list_leads, category: discovery, rest: [getLeadsList], binding: rest, confidence: high}
+- {tool: get_lead, category: discovery, rest: [getLeadsLead], binding: rest, confidence: high}
+- {tool: get_quote, category: quote, rest: [getQuoteById], binding: rest, confidence: high}
+- {tool: get_quote_detail, category: quote, rest: [getQuoteDetail], binding: rest, confidence: high}
+- {tool: get_quote_document, category: quote, rest: [getQuotePdf], binding: rest, confidence: high,
+   note: Returns a Blob rather than JSON; the client branches on Content-Type.}
+- {tool: list_classes_of_business, category: reference, rest: [getClassOfBusiness], binding: rest, confidence: high}
+- {tool: list_nominated_leads, category: reference, rest: [getSyndicateNominatedSyndicateByClassOfBusiness], binding: rest, confidence: high}
+- {tool: list_risk_codes, category: reference, rest: [getRiskCodes], binding: rest, confidence: high}
+- {tool: search_broking_houses, category: reference, rest: [getBrokingHouseSuggest], binding: rest, confidence: high}
+- {tool: create_quote, category: quote, rest: [createQuote], binding: rest, confidence: high}
+- {tool: create_quote_from_indication, category: quote, rest: [createQuoteFromIndication], binding: rest, confidence: high}
+- {tool: update_quote, category: quote, rest: [updateQuoteById], binding: rest, confidence: high}
+- {tool: create_quote_version, category: quote, rest: [createQuoteVersion], binding: rest, confidence: high}
+- {tool: upload_schedule_of_values, category: exposure, rest: [createQuoteSov, updateQuoteSov], binding: rest, confidence: high,
+   note: Multipart upload; POST creates and PUT replaces the same resource.}
+- {tool: geocode_schedule_of_values, category: exposure, rest: [createQuoteProcessSov], binding: rest, confidence: high,
+   note: Asynchronous job; no completion webhook exists, the caller polls.}
+- {tool: start_pricing, category: pricing, rest: [updateQuoteStartPricing], binding: rest, confidence: high,
+   note: "Asynchronous. Ki's own client polls quote detail every 5s for up to 90s (GET_PRICING_INTERVAL/GET_PRICING_TIMEOUT)."}
+- {tool: discard_quote, category: quote, rest: [updateQuoteDiscard], binding: rest, confidence: high}
+- {tool: extract_slip, category: ingestion, rest: [createSlipExtractionExecuteSlipExtractionJob], binding: rest, confidence: high}
+- {tool: get_slip_extraction_status, category: ingestion, rest: [getSlipExtractionJobStatus], binding: rest, confidence: high}
+- {tool: quote_from_slip, category: ingestion, rest: [createSlipExtractionQuoteFromJobResult], binding: rest, confidence: high}
+- {tool: issue_firm_order_note, category: bind, rest: [createQuoteFirmOrderNoteV2], binding: rest, confidence: high,
+   note: Human-in-the-loop required — this commits syndicate capacity.}
+- {tool: export_pipeline_csv, category: reporting, rest: [createPipelineCsv], binding: rest, confidence: high,
+   note: "POST with a JSON body and Accept: application/csv."}
+mcp_only: []
+rest_only:
+- capability: Master data / reference lookups
+  count: 38
+  examples: [getMasterdataPropertyPerils, getMasterdataCyberKiLimitbasis, getMasterdataHqCountries,
+    getMasterdataTerritories, getMasterdataCompliance]
+  reason: >-
+    Form-driving enumerations. Better exposed to an agent as MCP resources than
+    as tools; excluded from the candidate tool set deliberately.
+- capability: Platform administration
+  count: 6
+  examples: [getAdminSettings, updateAdminSettings, getAdminMaintenance,
+    updateAdminMaintenance, createAdminUploadMaxLineSize, createAdminValidateMaxLineSize]
+  reason: Operator surface, including max line size — the control that bounds how much
+    capacity Ki will write. Never appropriate for an agent.
+- capability: User and broking-house administration
+  count: 17
+  examples: [getUserAll, createUserAll, updateUserWithId, updateUserClassOfBusiness,
+    deleteUser, createUserBulkUpload, createBrokingHouseBranches, updateBrokingHouseBranch,
+    deleteBrokingHouseBranch, getBrokingHouseLloydsBrokerId]
+  reason: Identity and entitlement management, not underwriting.
+- capability: Dashboard and facilities
+  count: 7
+  examples: [getDashboardIndications, getDashboardRenewals, getFacilitiesLineslipMappings,
+    getExclusionClausesList, getFacilityAttestations, getSyndicateTrackerSyndicates,
+    getConfigLineslips]
+  reason: Useful but secondary; candidates for a second tool wave.
+- capability: Telemetry
+  count: 2
+  examples: [createFrontendMetrics, createUserJourneyEvents]
+  reason: Client instrumentation, not a capability.
+coverage:
+  tools_named: 24
+  tools_bound: 24
+  mcp_only: 0
+  rest_operations_total: 109
+  rest_operations_with_a_tool: 25
+  rest_operations_without_a_tool: 84

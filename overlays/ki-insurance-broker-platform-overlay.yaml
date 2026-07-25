@@ -1,0 +1,83 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Ki Broker Trading Platform API
+  version: 1.0.0
+extends: openapi/ki-insurance-broker-platform-openapi.yml
+x-apievangelist:
+  generated: '2026-07-25'
+  method: generated
+  source: openapi/ki-insurance-broker-platform-openapi.yml
+  note: >-
+    The base document is itself an API Evangelist derivation from Ki's published
+    client bundle. This overlay carries the API Evangelist assessment layer —
+    provenance, governance posture and gaps — separately from the observed
+    surface so the two never get confused.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provenance: derived-from-published-client-bundle
+    x-apievangelist-gated: partner-only
+    x-apievangelist-artifacts:
+      authentication: authentication/ki-insurance-authentication.yml
+      scopes: scopes/ki-insurance-scopes.yml
+      conventions: conventions/ki-insurance-conventions.yml
+      errors: errors/ki-insurance-problem-types.yml
+      lifecycle: lifecycle/ki-insurance-lifecycle.yml
+      conformance: conformance/ki-insurance-conformance.yml
+      data_model: data-model/ki-insurance-data-model.yml
+      agentic_access: agentic-access/ki-insurance-agentic-access.yml
+      mcp: mcp/ki-insurance-mcp.yml
+      skills: skills/_index.yml
+    x-apievangelist-gaps:
+    - no provider-published OpenAPI or reference documentation
+    - no request or response schemas
+    - no idempotency contract on any write operation
+    - no pagination on any list operation
+    - no RFC 9457 problem details and no error-code registry
+    - no rate-limit documentation or headers
+    - no webhooks, events or AsyncAPI
+    - no status page, SLA or deprecation policy
+    - no sandbox, test credentials or self-serve signup
+- target: $.info
+  update:
+    x-apievangelist-market: >-
+      Ki is Lloyd's Syndicate 1618, a follow-only algorithmic syndicate. This API
+      is machine-to-machine insurance placement infrastructure for broking firms,
+      not a developer product — the archetype of the London-market pattern where
+      genuine API capability is invisible from the outside.
+- target: $.servers[0]
+  update:
+    x-apievangelist-access: >-
+      Same-origin API behind the broker single-page app. Not reachable without an
+      Auth0 authorization-code login granted to a partner broking house.
+- target: $.components.securitySchemes.auth0Bearer
+  update:
+    x-apievangelist-note: >-
+      Ki publishes no scope model for this token; authorisation is role and
+      class-of-business entitlement based, enforced server-side and surfaced only
+      as HTTP 403.
+- target: $.paths['/api/quote/{quoteId}/startPricing'].put
+  update:
+    x-apievangelist-async:
+      style: client-polling
+      poll_operation: getQuoteDetail
+      interval_seconds: 5
+      timeout_seconds: 90
+      source: >-
+        GET_PRICING_INTERVAL and GET_PRICING_TIMEOUT in
+        https://app.ki-insurance.com/config.js
+- target: $.paths['/api/quote/v2/{quoteId}/firm-order-note'].post
+  update:
+    x-agentic-access:
+      action-class: acting
+      consequence: physical
+      escalation:
+        human-in-the-loop: required
+      note: >-
+        Commits Ki's follow capacity to the risk. The single most consequential
+        operation in this API.
+- target: $.paths['/api/maxlinesizes'].post
+  update:
+    x-apievangelist-note: >-
+      Max line size bounds how much capacity Ki will write. Operator-only; never
+      expose to an agent or a partner integration.

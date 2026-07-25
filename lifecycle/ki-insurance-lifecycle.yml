@@ -1,0 +1,64 @@
+generated: '2026-07-25'
+method: searched
+source: live probes of ki-insurance.com, app.ki-insurance.com and the platform bundle
+summary: >-
+  Ki publishes no API lifecycle policy of any kind. There is no versioning
+  statement, no deprecation or sunset policy, no SLA, no status page and no
+  changelog for the Broker API or the trading platform. Everything recorded here
+  is either observed in the client bundle or an explicitly probed absence.
+versioning:
+  scheme: per-resource path segment
+  current: unversioned (with three v2 resources)
+  docs: null
+  versioned_resources:
+  - /api/quote/v2/{quoteId}/firm-order-note
+  - /api/nominatedlead/v2/cob/{classOfBusinessId}
+  - /api/vessel/v2/validate
+  - /api/indications/v2/suggestions-all
+  note: >-
+    No global version prefix, no version header, no date-based version train.
+    Behavioural changes are shipped behind LaunchDarkly flags rather than versions.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No RFC 8594 Sunset or Deprecation header support is observable and no
+    deprecation policy is published. The presence of both v1 and v2 forms of the
+    same resources implies old forms are retired silently.
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA. Ki's commercial terms are the partner/broking-house agreement,
+    not a published API service level.
+status_page: null
+status_page_probe:
+  url: https://status.ki-insurance.com
+  status: '000'
+  note: DNS does not resolve. No third-party status page (Statuspage, Instatus,
+    Better Stack) is linked from ki-insurance.com or the platform.
+maintenance:
+  mechanism: in-platform maintenance mode
+  api:
+  - getAdminMaintenance
+  - updateAdminMaintenance
+  client_behaviour: >-
+    Any HTTP 503 routes the broker to a maintenance page. Ki's operators toggle
+    the state through the admin API — an internal substitute for a status page.
+changelog:
+  url: null
+  note: >-
+    Ki's /news/ feed is corporate press releases (capacity partners, results,
+    appointments), not a product or API changelog. It is wired as Blog, not
+    ChangeLog, because it carries no release entries.
+roadmap:
+  url: null
+support:
+  channel: in-application
+  note: >-
+    Support is Intercom inside the broker platform plus the
+    createContactUserRequest operation (POST /api/contact/user-request). There is
+    no public support portal, help centre or developer forum, and ki-insurance.com
+    has no /contact page.

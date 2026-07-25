@@ -1,0 +1,29 @@
+generated: '2026-07-25'
+method: generated
+source: openapi/ki-insurance-broker-platform-openapi.yml
+note: >-
+  Native Arazzo workflows over Ki's observed broker platform API. Every
+  operationId is verified against openapi/ki-insurance-broker-platform-openapi.yml.
+  These are not runnable without partner-gated Auth0 credentials — Ki publishes no
+  sandbox, so no example inputs are seeded.
+workflows:
+- file: ki-insurance-quote-and-price.yml
+  workflowId: quote-and-price
+  title: Quote a risk and run the follow algorithm
+  summary: >-
+    Confirm the class of business and its nominated lead, create a quote, attach
+    the schedule of values, run Ki's algorithmic pricing (polled, no webhook) and
+    download the quote PDF.
+- file: ki-insurance-slip-to-quote.yml
+  workflowId: slip-to-quote
+  title: Turn a broker slip into a quote
+  summary: >-
+    Register a slip upload, execute Ki's extraction job, poll to completion, read
+    the structured result and promote it into a quote.
+not_modelled:
+- workflow: issue a firm order note
+  reason: >-
+    createQuoteFirmOrderNoteV2 commits Ki's follow capacity and is classified
+    human-in-the-loop required. It is documented as an agent skill with an
+    explicit approval gate (skills/ki-insurance-indication-to-firm-order.md)
+    rather than as an executable workflow.

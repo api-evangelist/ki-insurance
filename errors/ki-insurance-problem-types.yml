@@ -1,0 +1,59 @@
+generated: '2026-07-25'
+method: derived
+source: openapi/ki-insurance-broker-platform-openapi.yml
+also_derived_from: https://app.ki-insurance.com/assets/index-DgeF7w2c.js
+format: none
+format_note: >-
+  Ki publishes no error reference and does not use RFC 9457
+  application/problem+json. The problems below are the status codes Ki's own
+  broker client explicitly branches on in its shared request helper — they are
+  observed behaviour, not a documented contract. No error code registry, no
+  machine-readable error type and no remediation guidance is published.
+problems:
+- status: 401
+  title: Unauthorized
+  detail: >-
+    The Auth0 access token is missing, expired or rejected. The platform client
+    clears its token cache, removes the Auth0 client, pushes a logout history
+    entry with the message "Your session has expired due to inactivity. Please log
+    in again." and reloads to the login route.
+  remediation: >-
+    Re-run the authorization-code login at https://auth.ki-insurance.com/login
+    (or refresh the token via https://login.ki-insurance.com/oauth/token) and
+    retry.
+  applies_to: all operations
+  source_operation: openapi/ki-insurance-broker-platform-openapi.yml
+- status: 403
+  title: Forbidden
+  detail: >-
+    The authenticated broker user is not entitled to the resource. Ki's
+    authorisation is role/entitlement based (admin surfaces, per-user selected
+    classes of business), so this is the common failure for a valid token
+    reaching an out-of-scope resource.
+  remediation: >-
+    Ask the Ki account team or your broking-house administrator to grant the
+    class of business or admin role; there is no self-serve entitlement API.
+  applies_to: all operations
+  source_operation: openapi/ki-insurance-broker-platform-openapi.yml
+- status: 503
+  title: Service unavailable — platform maintenance
+  detail: >-
+    Ki has put the platform into maintenance mode. The client routes the user to
+    a maintenance page. Maintenance state is itself an operation pair
+    (getAdminMaintenance / updateAdminMaintenance).
+  remediation: Retry after the maintenance window; there is no public status page to watch.
+  applies_to: all operations
+  source_operation: openapi/ki-insurance-broker-platform-openapi.yml
+observed_client_behaviour:
+  parse_rule: >-
+    The helper parses the body as JSON only when the response Content-Type
+    contains "json", otherwise it attempts a Blob. Error bodies are therefore
+    never structurally validated by the client.
+  thrown_errors:
+  - Unauthorized
+  - Forbidden
+gaps:
+- No RFC 9457 problem+json.
+- No error code registry or per-operation error catalogue.
+- No documented validation-error shape for the large form-driven quote payloads.
+- No 429 handling, consistent with no published rate limits.
