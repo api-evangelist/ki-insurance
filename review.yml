@@ -1,0 +1,213 @@
+aid: ki-insurance
+name: Ki Insurance
+review:
+  question: Does Ki Insurance expose a public, self-serve developer portal or downloadable
+    API specifications?
+  answer: false
+  date: '2026-07-25'
+  reviewer: API Evangelist
+  homeMarket: United Kingdom
+  gated: true
+findings:
+  summary: |
+    Ki Insurance (Lloyd's Syndicate 1618) has a real machine-to-machine API —
+    the "Broker API" it announced on 4 May 2021 — but it is completely
+    partner-gated. There is no developer portal, no public API reference, no
+    self-serve signup, and no downloadable OpenAPI, Swagger, GraphQL SDL,
+    Postman collection, AsyncAPI or event catalog anywhere on the public
+    surface. Every candidate developer host was probed and none resolves:
+    developer.ki-insurance.com, developers.ki-insurance.com,
+    docs.ki-insurance.com, api.ki-insurance.com, platform.ki-insurance.com,
+    broker-api.ki-insurance.com and sandbox.ki-insurance.com all fail DNS
+    (curl exit code 000), while /developers, /api, /developer, /partners,
+    /integrations and /brokers on ki-insurance.com all return HTTP 404.
+    The only live application surface is app.ki-insurance.com (HTTP 200), a
+    Create-React-App single-page broker platform that immediately hands off to
+    an Auth0 login. It is a login wall, not a developer portal. Requests to
+    /openapi.json, /swagger.json and /graphql on that host return HTTP 200 but
+    serve the SPA's index.html (<!DOCTYPE html>), not a specification — a
+    classic SPA catch-all false positive, explicitly checked and rejected.
+    This is the archetypal United Kingdom / London-market posture: the
+    subscription market's modernisation work (Blueprint Two, PPL, Whitespace,
+    and Ki itself) is genuine API infrastructure built for brokers and
+    syndicates, not for developers, so none of it is externally discoverable.
+  developerPortal:
+    url: ''
+    exists: false
+    classification: partner/agent login wall
+    note: |
+      app.ki-insurance.com returns HTTP 200 but is the authenticated broker
+      trading platform, not a developer portal. No reference documentation,
+      no API console, no key issuance, no sandbox is publicly reachable.
+  probes:
+    - url: https://developer.ki-insurance.com
+      status: 000
+      note: DNS does not resolve.
+    - url: https://developers.ki-insurance.com
+      status: 000
+      note: DNS does not resolve.
+    - url: https://docs.ki-insurance.com
+      status: 000
+      note: DNS does not resolve.
+    - url: https://api.ki-insurance.com
+      status: 000
+      note: DNS does not resolve.
+    - url: https://platform.ki-insurance.com
+      status: 000
+      note: DNS does not resolve.
+    - url: https://broker-api.ki-insurance.com
+      status: 000
+      note: Guessed host for the announced Broker API; DNS does not resolve.
+    - url: https://sandbox.ki-insurance.com
+      status: 000
+      note: DNS does not resolve.
+    - url: https://ki-insurance.com/developers
+      status: 404
+    - url: https://ki-insurance.com/api
+      status: 404
+    - url: https://ki-insurance.com/developer
+      status: 404
+    - url: https://ki-insurance.com/partners
+      status: 404
+    - url: https://ki-insurance.com/integrations
+      status: 404
+    - url: https://ki-insurance.com/brokers
+      status: 404
+    - url: https://app.ki-insurance.com/
+      status: 200
+      note: Create-React-App SPA for partner brokers; Auth0 login wall.
+    - url: https://app.ki-insurance.com/openapi.json
+      status: 200
+      note: FALSE POSITIVE — returns the SPA index.html (<!DOCTYPE html>), not a spec.
+    - url: https://app.ki-insurance.com/swagger.json
+      status: 200
+      note: FALSE POSITIVE — returns the SPA index.html, not a spec.
+    - url: https://app.ki-insurance.com/api-docs
+      status: 404
+    - url: https://app.ki-insurance.com/graphql
+      status: 200
+      note: FALSE POSITIVE — returns the SPA index.html; no GraphQL surface, no introspection possible.
+    - url: https://login.ki-insurance.com/.well-known/openid-configuration
+      status: 200
+      note: Auth0 OIDC discovery document, served anonymously.
+    - url: https://login.ki-insurance.com/.well-known/oauth-authorization-server
+      status: 200
+      note: Auth0 serves the same metadata at the OAuth 2.0 AS endpoint.
+    - url: https://auth.ki-insurance.com/.well-known/openid-configuration
+      status: 404
+      note: auth.ki-insurance.com is Ki's own auth service shim, not an OIDC issuer.
+    - url: https://ki-insurance.com/sitemap.xml
+      status: 200
+      note: Full sitemap enumerated — 25 non-news pages, none developer- or API-related.
+  specifications:
+    openapiHarvested: false
+    count: 0
+    note: |
+      No OpenAPI, Swagger, AsyncAPI, GraphQL SDL, .proto or Postman artifact
+      is published. Every candidate path was fetched and inspected; the only
+      HTTP 200 responses were SPA HTML fallbacks. The openapi/ directory is
+      deliberately omitted from this repo rather than filled with anything
+      inferred.
+  acordPosture:
+    phrase: no ACORD reference found
+    note: |
+      No occurrence of ACORD, AL3, ACORD XML, NGDS or IVANS was found on
+      ki-insurance.com's homepage, /about, /insurance, /sov, the capacity
+      partners page, or any of the 30 news/press-release pages in the sitemap.
+      Ki is a Lloyd's follow syndicate, so its market plumbing runs through
+      Lloyd's own modernisation programme (Blueprint Two, the Core Data Record,
+      PPL/Whitespace electronic placement) rather than through published ACORD
+      assets — but Ki publishes nothing about that publicly either. The single
+      standards signal Ki does emit is on GitHub: the Ki-Insurance org
+      maintains a fork of OasisLMF/OpenDataTransform, the open catastrophe
+      exposure-data transformation tool (OED), last pushed 2025-06-23. That is
+      cat-modelling exposure data, not ACORD.
+  insuranceVerbs:
+    quote: partner-only — the announced Broker API lets partner broking platforms
+      request follow-capacity quotes directly from Ki's algorithm; no public docs.
+    bind: partner-only — follow capacity is committed inside the authenticated
+      app.ki-insurance.com platform; no documented API.
+    issue: not exposed — policy issuance sits with the lead underwriter and the
+      Lloyd's market processes, not with a Ki public API.
+    fnol: not exposed — no claims or FNOL surface is documented publicly.
+    audience: partner-only (Lloyd's broking firms), never consumer-facing and never
+      self-serve.
+  authModel:
+    scheme: OAuth 2.0 / OIDC authorization-code (Auth0), partner-gated
+    issuer: https://login.ki-insurance.com/
+    audience: https://api.ki.com
+    note: |
+      Confirmed from https://app.ki-insurance.com/config.js, which publishes
+      AUTH0_DOMAIN "login.ki-insurance.com", AUTH0_AUDIENCE "https://api.ki.com"
+      and a public SPA client id. The OIDC discovery document at
+      https://login.ki-insurance.com/.well-known/openid-configuration (HTTP 200)
+      advertises only the standard Auth0 scopes (openid, profile, offline_access,
+      email, phone, address) — no Ki business scopes are published. No API key,
+      mTLS or partner SAML scheme is documented publicly.
+  webhooks:
+    documented: false
+    note: No event catalog, webhook reference or AsyncAPI document is published.
+      Absence is the finding.
+  postman:
+    public: false
+    note: No public Postman workspace or collection was found.
+  graphql:
+    public: false
+    note: No public GraphQL endpoint; /graphql on the app host is an SPA fallback.
+  transports:
+    - protocol: HTTPS (web application)
+      documented: true
+      baseURL: https://app.ki-insurance.com
+      note: Authenticated broker trading platform, single-page app.
+    - protocol: REST (Broker API)
+      documented: false
+      note: |
+        Announced 4 May 2021 in Ki's Q1 press release as a capability that
+        "allows quotes to be requested directly by a digital broking platform."
+        No base URL, endpoint, schema or reference documentation is published;
+        the token audience https://api.ki.com is the only public hint of a host.
+    - protocol: GraphQL
+      documented: false
+    - protocol: WebSocket
+      documented: false
+    - protocol: gRPC
+      documented: false
+sources:
+  - url: https://ki-insurance.com/
+    type: Website
+    note: Homepage — algorithmic follow capacity for Lloyd's brokers; capacity partners
+      Aspen Digital, Beazley, Brit, QBE, Travelers, TMK. No API or developer mention.
+  - url: https://ki-insurance.com/about/
+    type: About
+    note: Company story; launched from Brit with Google Cloud and UCL.
+  - url: https://ki-insurance.com/news/ki-announces-platform-updates-and-successful-first-quarter/
+    type: PressRelease
+    note: |
+      4 May 2021 — "Ki has also developed and released its first Broker API.
+      This transformative step will allow partner brokers to integrate digitally
+      with Ki and create a totally seamless connection to Ki's algorithm to
+      obtain quotes." Sole primary-source confirmation that the API exists.
+      Explicitly partner-scoped.
+  - url: https://ki-insurance.com/news/ki-platform-goes-live-with-partner-brokers/
+    type: PressRelease
+    note: Platform go-live with initial trading partners, framed against Lloyd's
+      Blueprint Two.
+  - url: https://app.ki-insurance.com/config.js
+    type: Authentication
+    note: Public SPA runtime config exposing the Auth0 domain, audience and client id.
+  - url: https://login.ki-insurance.com/.well-known/openid-configuration
+    type: Authentication
+    note: Auth0 OIDC discovery document, HTTP 200, anonymous.
+  - url: https://github.com/Ki-Insurance
+    type: GitHubOrganization
+    note: 9 public repos, almost all forks of ML/infra tooling (feast, seldon-core,
+      shap, kedro-mlflow, kedro-vertexai, terraform-google-kubernetes-engine) plus a
+      fork of OasisLMF/OpenDataTransform. No API, SDK or specification repo.
+actions:
+  apisListed: 0
+  openapiDirectoryCreated: false
+  reason: |
+    Ki's only integration surface is partner-gated. Listing the Broker API in
+    apis[] would require a documentation URL and a base URL that Ki does not
+    publish, so apis[] is intentionally empty. Recording the absence accurately
+    is the finding.

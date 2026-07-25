@@ -1,0 +1,60 @@
+aid: ki-insurance
+url: https://raw.githubusercontent.com/api-evangelist/ki-insurance/refs/heads/main/apis.yml
+name: Ki Insurance
+kind: company
+description: >-
+  Ki is the first fully digital, algorithmically driven syndicate at Lloyd's of
+  London, launched in 2020 out of Brit with Google Cloud and University College
+  London and capitalised with US$500m from Blackstone Tactical Opportunities and
+  Fairfax Financial. Operating from the United Kingdom as Lloyd's Syndicate 1618,
+  Ki writes follow-only capacity across specialty lines — property, casualty and
+  specialty — quoting risks that a lead underwriter has already priced, in seconds
+  rather than days, through an algorithm rather than a face-to-face negotiation in
+  the Room. Brokers reach Ki through app.ki-insurance.com, a partner-gated
+  single-page platform behind an Auth0 authorization-code login, and Ki announced a
+  "Broker API" in May 2021 that lets partner broking platforms request quotes
+  directly from the algorithm. That API posture is entirely partner-gated. There is
+  no developer portal, no public reference documentation, no self-serve signup, no
+  downloadable OpenAPI or Postman collection, and no public webhook or event
+  catalog. Every probed developer host — developer., developers., docs., api., and
+  the /developers, /api, /partners, /integrations paths — fails to resolve or
+  returns 404. Ki is a clear example of the United Kingdom's London-market pattern.
+  It is genuinely advanced machine-to-machine insurance placement infrastructure,
+  aimed at brokers and syndicates rather than at developers, and therefore
+  invisible from the outside.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Insurance
+- United Kingdom
+- Lloyd's of London
+- Specialty Insurance
+- Property and Casualty
+- Underwriting
+- Insurtech
+- Broker
+- Algorithmic Underwriting
+- Reinsurance
+created: '2026-07-25'
+modified: '2026-07-25'
+specificationVersion: '0.19'
+apis: []
+common:
+- type: Website
+  url: https://ki-insurance.com/
+- type: About
+  url: https://ki-insurance.com/about/
+- type: Blog
+  url: https://ki-insurance.com/news/
+- type: Partners
+  url: https://ki-insurance.com/capacity-partners/
+- type: SignUp
+  url: https://app.ki-insurance.com/
+- type: Authentication
+  url: https://login.ki-insurance.com/.well-known/openid-configuration
+- type: GitHubOrganization
+  url: https://github.com/Ki-Insurance
+- type: LinkedIn
+  url: https://www.linkedin.com/company/ki-insurance
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
