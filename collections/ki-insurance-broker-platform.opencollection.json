@@ -1,0 +1,1877 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ki Broker Trading Platform API (observed)",
+    "version": "2026-07-25"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Broking Houses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Resolve a Lloyd's broker id from broker code and pseudonym",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/brokinghouse/get-lloyds-broker-id",
+            "params": [
+              {
+                "name": "brokerCode",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              },
+              {
+                "name": "brokerPseudonym",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `brokingHouse.lloydsBrokerId` -> `GET /api/brokinghouse/get-lloyds-broker-id?brokerCode=${e}&brokerPseudonym=${t}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Type-ahead search for broking houses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/brokinghouse/suggest",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `brokingHouse.suggest` -> `GET /api/brokinghouse/suggest?query=${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Create a branch for a broking house",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/brokinghouse/:brokingHouseId/branch",
+            "params": [
+              {
+                "name": "brokingHouseId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "validToba",
+                "value": "",
+                "type": "query",
+                "description": "Observed verbatim in the client bundle: when set the client appends ?validToba=true."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `brokingHouse.branches` -> `POST /api/brokinghouse/${e}/branch` (with an optional `?validToba=true` suffix). Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Update a broking-house branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.ki-insurance.com/api/brokinghouse/:brokingHouseId/branch/:branchId",
+            "params": [
+              {
+                "name": "brokingHouseId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `brokingHouse.branch` -> `PUT /api/brokinghouse/${e}/branch/${t}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Update a broking-house branch",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.ki-insurance.com/api/brokinghouse/:brokingHouseId/branch/:branchId",
+            "params": [
+              {
+                "name": "brokingHouseId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "branchId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `brokingHouse.branch` -> `DELETE /api/brokinghouse/${e}/branch/${t}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "List classes of business for a broking house",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/brokinghouse/:brokingHouseId/cobs",
+            "params": [
+              {
+                "name": "brokingHouseId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `classOfBusiness.brokerClassOfBusiness` -> `GET /api/brokinghouse/${e}/cobs`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Classes of Business",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List classes of business",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/cob"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `classOfBusiness.classOfBusiness` -> `GET /api/cob`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Market Leaders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve company-markets configuration for a class of business",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/company-markets-config/:classOfBusinessId",
+            "params": [
+              {
+                "name": "classOfBusinessId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `companyMarkets.config` -> `GET /api/company-markets-config/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "List nominated lead insurers for a class of business",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/nominated-insurer/cob/:classOfBusinessId",
+            "params": [
+              {
+                "name": "classOfBusinessId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `insurer.nominatedInsurerByClassOfBusiness` -> `GET /api/nominated-insurer/cob/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "List Lloyd's lead syndicates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/nominatedlead"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `syndicate.lloydsLeaders` -> `GET /api/nominatedlead`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "List nominated lead syndicates for a class of business",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/nominatedlead/v2/cob/:classOfBusinessId",
+            "params": [
+              {
+                "name": "classOfBusinessId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "newBusiness",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `syndicate.nominatedSyndicateByClassOfBusiness` -> `GET /api/nominatedlead/v2/cob/${e}?newBusiness=${t||!1}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Configuration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve line-slip configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/config/lineslips"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `config.lineslips` -> `GET /api/config/lineslips`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Support",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit a user support request",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/contact/user-request",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `contact.userRequest` -> `POST /api/contact/user-request`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Dashboard",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve dashboard indications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/dashboard/indications",
+            "params": [
+              {
+                "name": "days",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              },
+              {
+                "name": "useDomainModelBasedIndications",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `dashboard.indications` -> `GET /api/dashboard/indications?days=${e}&useDomainModelBasedIndications=${t}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Retrieve dashboard renewals",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/dashboard/renewals",
+            "params": [
+              {
+                "name": "days",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              },
+              {
+                "name": "useDomainModelBasedIndications",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `dashboard.renewals` -> `GET /api/dashboard/renewals?days=${e}&useDomainModelBasedIndications=${t}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Facilities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve facility attestations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/facilities/attestations",
+            "params": [
+              {
+                "name": "facilityId",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              },
+              {
+                "name": "cobId",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `facilityAttestations` -> `GET /api/facilities/attestations?facilityId=${e}&cobId=${t}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "List exclusion clauses for a class of business and facility",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/facilities/exclusion-clauses",
+            "params": [
+              {
+                "name": "cobId",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              },
+              {
+                "name": "facilityId",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `exclusionClauses.list` -> `GET /api/facilities/exclusion-clauses?cobId=${e}&facilityId=${t}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "List facility line-slip mappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/facilities/lineslip-mappings"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `facilities.lineslipMappings` -> `GET /api/facilities/lineslip-mappings`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "List tracker/trigger markets for a class of business",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/facilities/triggerMarkets/:classOfBusinessId",
+            "params": [
+              {
+                "name": "classOfBusinessId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `syndicate.trackerSyndicates` -> `GET /api/facilities/triggerMarkets/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Telemetry",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit front-end metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/frontend-metrics",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `frontendMetrics` -> `POST /api/frontend-metrics`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Indications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Suggest indications for an insured (pre-v2 path)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/indications/suggestions-all"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.indicationSuggestions` -> `GET api/indications/suggestions-all`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented. This is the pre-v2 path; the client selects between it and /api/indications/v2/suggestions-all with a LaunchDarkly feature flag."
+        },
+        {
+          "info": {
+            "name": "Suggest indications for an insured",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/indications/v2/suggestions-all"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.indicationSuggestions` -> `GET api/indications/v2/suggestions-all`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Leads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List leads",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/leads"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `leads.list` -> `GET /api/leads`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Retrieve a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/leads/:leadId",
+            "params": [
+              {
+                "name": "leadId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `leads.lead` -> `GET /api/leads/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Activate a lead",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/leads/:leadId/activate",
+            "params": [
+              {
+                "name": "leadId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `leads.activate` -> `POST /api/leads/${e}/activate`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Master Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search compliance master data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/compliance/search",
+            "params": [
+              {
+                "name": "iso2",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.compliance` -> `GET /api/masterdata/compliance/search?iso2=${e}&query=${t}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get interests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cargointeresttypes"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cargo.interests` -> `GET /api/masterdata/ki/cargointeresttypes`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get deductibles",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cargoprojectdsudeductibledays"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cargo.deductibles` -> `GET /api/masterdata/ki/cargoprojectdsudeductibledays`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get ageRange",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/contingencyagerange"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.contingency.ageRange` -> `GET /api/masterdata/ki/contingencyagerange`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get deductibleType",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/contingencydeductibletype"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.contingency.deductibleType` -> `GET /api/masterdata/ki/contingencydeductibletype`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get eventDescription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/contingencyeventdescription"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.contingency.eventDescription` -> `GET /api/masterdata/ki/contingencyeventdescription`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get nonApperanceGroup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/contingencynonappearancegroup"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.contingency.nonApperanceGroup` -> `GET /api/masterdata/ki/contingencynonappearancegroup`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get bicoveragetype",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cyberbicoveragestype"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.bicoveragetype` -> `GET /api/masterdata/ki/cyberbicoveragestype`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get bi",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cyberbicoverincluded"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.bi` -> `GET /api/masterdata/ki/cyberbicoverincluded`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get biosptype",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cyberbiosptype"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.biosptype` -> `GET /api/masterdata/ki/cyberbiosptype`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get biospunschedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cyberbiunscheduleosp"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.biospunschedule` -> `GET /api/masterdata/ki/cyberbiunscheduleosp`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get deductiblebasis",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cyberdeductible"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.deductiblebasis` -> `GET /api/masterdata/ki/cyberdeductible`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get excessbasis",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cyberexcessbasis"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.excessbasis` -> `GET /api/masterdata/ki/cyberexcessbasis`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get industrySectors",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cyberindustrysector"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.industrySectors` -> `GET /api/masterdata/ki/cyberindustrysector`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get limitbasis",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cyberlimitbasis"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.limitbasis` -> `GET /api/masterdata/ki/cyberlimitbasis`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get noOfRecords",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cybernoofrecords"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.noOfRecords` -> `GET /api/masterdata/ki/cybernoofrecords`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get noOfTransactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cybernooftransactions"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.noOfTransactions` -> `GET /api/masterdata/ki/cybernooftransactions`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get organisationtype",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cyberorganisationtype"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.organisationtype` -> `GET /api/masterdata/ki/cyberorganisationtype`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get pcicompliant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cyberpcicompliant"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.pcicompliant` -> `GET /api/masterdata/ki/cyberpcicompliant`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get products",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cyberproducts"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.products` -> `GET /api/masterdata/ki/cyberproducts`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get reinstatements",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cyberreinstatements"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.reinstatements` -> `GET /api/masterdata/ki/cyberreinstatements`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get reinstatementstype",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cyberreinstatementsType"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.reinstatementstype` -> `GET /api/masterdata/ki/cyberreinstatementsType`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get retroactiveDates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cyberretrooption"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.retroactiveDates` -> `GET /api/masterdata/ki/cyberretrooption`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get techdisciplines",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cybertechdisciplines"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.techdisciplines` -> `GET /api/masterdata/ki/cybertechdisciplines`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get warexclusion",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/cyberwarexclusion"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.warexclusion` -> `GET /api/masterdata/ki/cyberwarexclusion`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get industry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/doindustry"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.do.industry` -> `GET /api/masterdata/ki/doindustry`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get numberEmployees",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/energy-liability-number-employees"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.energyLiability.numberEmployees` -> `GET /api/masterdata/ki/energy-liability-number-employees`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get institutionType",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/fiinstitution"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.fi.institutionType` -> `GET /api/masterdata/ki/fiinstitution`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get countries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/gethqcountrylist"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.hq.countries` -> `GET /api/masterdata/ki/gethqcountrylist`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get caStates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/gethqstatecanadalist"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.hq.caStates` -> `GET /api/masterdata/ki/gethqstatecanadalist`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get usStates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/gethqstateuslist"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.hq.usStates` -> `GET /api/masterdata/ki/gethqstateuslist`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get auStates",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/hqstateaustralia"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.hq.auStates` -> `GET /api/masterdata/ki/hqstateaustralia`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get noOfProperties",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/noofproperties"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.property.noOfProperties` -> `GET /api/masterdata/ki/noofproperties`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get limitTypes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/pilimittypes"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.pi.limitTypes` -> `GET /api/masterdata/ki/pilimittypes`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get placingbases",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/placingbases",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.placingbases` -> `GET /api/masterdata/ki/placingbases?filter=${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get locations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/propertylocations"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.property.locations` -> `GET /api/masterdata/ki/propertylocations`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get occupancies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/propertyoccupancies"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.property.occupancies` -> `GET /api/masterdata/ki/propertyoccupancies`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get perils",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/propertyperils"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.property.perils` -> `GET /api/masterdata/ki/propertyperils`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Get territories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/masterdata/ki/territories"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `masterdata.territories` -> `GET /api/masterdata/ki/territories`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Administration",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload max-line-size configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/maxlinesizes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `admin.uploadMaxLineSize` -> `POST /api/maxlinesizes`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Validate an uploaded max-line-size file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/maxlinesizes/validate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `admin.validateMaxLineSize` -> `POST /api/maxlinesizes/validate`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Retrieve maintenance-mode state",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/system/admin/maintenance-mode"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `admin.maintenance` -> `GET /api/system/admin/maintenance-mode`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Set maintenance-mode state",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.ki-insurance.com/api/system/admin/maintenance-mode",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `admin.maintenance` -> `PUT /api/system/admin/maintenance-mode`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Retrieve platform admin settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/system/admin/settings"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `admin.settings` -> `GET /api/system/admin/settings`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Update platform admin settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.ki-insurance.com/api/system/admin/settings",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `admin.settings` -> `PUT /api/system/admin/settings`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Schedule of Values",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Delete property summary data for a quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.ki-insurance.com/api/otto-sov/property-summary-data/:quoteId",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `otto.sov.deletePropertySummaryData` -> `DELETE /api/otto-sov/property-summary-data/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Start a schedule-of-values upload session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/otto-sov/url",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `otto.sov.start` -> `POST /api/otto-sov/url`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pipeline",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List the broker quote pipeline",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/pipeline",
+            "params": [
+              {
+                "name": "useDomainModelBasedIndications",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `pipeline.list` -> `GET /api/pipeline?useDomainModelBasedIndications=${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Export the quote pipeline as CSV",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/pipeline/csv",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `pipeline.csv` -> `POST /api/pipeline/csv`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Quotes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create a quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/quote",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.create` -> `POST /api/quote`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Retrieve coverage-option mapping for a quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/quote-detail/coverage-option/:quoteId",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.coverageOptionMapping` -> `GET /api/quote-detail/coverage-option/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Retrieve quote detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/quote-detail/:quoteId",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.detail` -> `GET /api/quote-detail/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Retrieve quote detail",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/quote-detail/:quoteId",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.detail` -> `POST /api/quote-detail/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Retrieve firm-order-notice cc email addresses by class of business",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/quote/firm-order-notice/cob-cc-emails"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.fonCcEmails` -> `GET /api/quote/firm-order-notice/cob-cc-emails`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Create a quote from an indication",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/quote/indication/:indicationId",
+            "params": [
+              {
+                "name": "indicationId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.createFromIndication` -> `POST /api/quote/indication/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Issue a firm order note for a quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/quote/v2/:quoteId/firm-order-note",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.firmOrderNoteV2` -> `POST /api/quote/v2/${e}/firm-order-note`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Retrieve a quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/quote/:quoteId",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.quoteById` -> `GET /api/quote/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Update a quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.ki-insurance.com/api/quote/:quoteId",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.quoteById` -> `PUT /api/quote/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Discard a quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.ki-insurance.com/api/quote/:quoteId/discard",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.discard` -> `PUT /api/quote/${e}/discard`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Download the quote document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/quote/:quoteId/pdf",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.pdf` -> `GET /api/quote/${e}/pdf`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Delete a quote line",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.ki-insurance.com/api/quote/:quoteId/quoteline/:quoteLineId",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "quoteLineId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.delete` -> `DELETE /api/quote/${e}/quoteline/${t}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Upload or replace the schedule of values for a quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/quote/:quoteId/sov",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.sov` -> `POST /api/quote/${e}/sov`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Upload or replace the schedule of values for a quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.ki-insurance.com/api/quote/:quoteId/sov",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.sov` -> `PUT /api/quote/${e}/sov`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Start algorithmic pricing for a quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.ki-insurance.com/api/quote/:quoteId/startPricing",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.startPricing` -> `PUT /api/quote/${e}/startPricing`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Create a new version of a quote",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/quote/:quoteId/version",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.createVersion` -> `POST /api/quote/${e}/version`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Start geocoding jobs for a quote schedule of values",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/quote/:quoteId/:quoteLineId/geocodingJobs",
+            "params": [
+              {
+                "name": "quoteId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "quoteLineId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.processSov` -> `POST /api/quote/${e}/${t}/geocodingJobs`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Validate a marine vessel schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/vessel/v2/validate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `quote.validateVessels` -> `POST /api/vessel/v2/validate`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Risk Codes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Retrieve Lloyd's risk codes for a class of business",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/risk/riskcode/:classOfBusinessId",
+            "params": [
+              {
+                "name": "classOfBusinessId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "nominatedLeadsOnly",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              },
+              {
+                "name": "inceptionDate",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              },
+              {
+                "name": "nonExcess",
+                "value": "",
+                "type": "query",
+                "description": "Query parameter observed verbatim in the published client bundle."
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `risk.codes` -> `GET /api/risk/riskcode/${e}?nominatedLeadsOnly=${!t}&inceptionDate=${n}&nonExcess=true`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Slip Extraction",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute a slip extraction job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/slip-extractions/jobs",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `slipExtraction.executeSlipExtractionJob` -> `POST /api/slip-extractions/jobs`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Retrieve a slip extraction job result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/slip-extractions/jobs/:jobId",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `slipExtraction.slipExtractionJobResult` -> `GET /api/slip-extractions/jobs/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Create a quote from a slip extraction job result",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/slip-extractions/jobs/:jobId/quote",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `slipExtraction.createQuoteFromJobResult` -> `POST /api/slip-extractions/jobs/${e}/quote`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Retrieve slip extraction job status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/slip-extractions/jobs/:jobId/status",
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `slipExtraction.slipExtractionJobStatus` -> `GET /api/slip-extractions/jobs/${e}/status`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Create a slip upload for extraction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/slip-extractions/uploads",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `slipExtraction.createSlipExtractionUpload` -> `POST /api/slip-extractions/uploads`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List platform users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/user"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `user.all` -> `GET /api/user`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Create a platform user",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/user",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `user.all` -> `POST /api/user`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Submit user-journey events",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/user-journey-events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `userJourneyEvents` -> `POST /api/user-journey-events`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Bulk delete users",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://app.ki-insurance.com/api/user/bulk"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `user.deleteUser` -> `DELETE /api/user/bulk`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Send bulk welcome emails",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/user/bulk/email",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `user.welcomeEmail` -> `POST /api/user/bulk/email`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Bulk register users",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/user/bulk/register",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `user.bulkUpload` -> `POST /api/user/bulk/register`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Record user consent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/user/consent",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `user.consent` -> `POST /api/user/consent`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Retrieve the currently authenticated user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://app.ki-insurance.com/api/user/current"
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `user.current` -> `GET /api/user/current`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Trigger a user password reset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://app.ki-insurance.com/api/user/reset-password",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `user.resetPassword` -> `POST /api/user/reset-password`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Update a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.ki-insurance.com/api/user/:userId",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `user.withId` -> `PUT /api/user/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        },
+        {
+          "info": {
+            "name": "Update a user selected classes of business",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://app.ki-insurance.com/api/user/:userId/selected-cobs",
+            "params": [
+              {
+                "name": "userId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Observed in the Ki broker platform client bundle as `user.classOfBusiness` -> `PUT /api/user/${e}/selected-cobs`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

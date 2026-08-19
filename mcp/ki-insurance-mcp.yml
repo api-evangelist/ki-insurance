@@ -9,10 +9,9 @@ search_result:
   - github.com/Ki-Insurance (9 repos, no MCP server)
   - npm and PyPI for a first-party Ki package (none)
   - the platform bundle for any /mcp or tools/list surface (none)
-  note: >-
-    Ki publishes no MCP server. This is a CANDIDATE tool surface derived from the
-    observed OpenAPI so that the shape of an agent-facing Ki is on record; it is
-    not a Ki artifact and nothing here is callable without partner credentials.
+  note: Ki publishes no MCP server. This is a CANDIDATE tool surface derived from the observed OpenAPI
+    so that the shape of an agent-facing Ki is on record; it is not a Ki artifact and nothing here is
+    callable without partner credentials.
 server:
   name: ki-insurance
   transport: http
@@ -23,11 +22,9 @@ server:
     audience: https://api.ki.com
     note: Any real Ki MCP server would have to broker a partner-gated Auth0 token.
 design_notes:
-  scope: >-
-    The candidate surface is deliberately narrow. The 38 master-data lookups and
-    the admin/telemetry operations are not useful agent tools; the underwriting
-    workflow is. Write tools that commit capacity (firm order note) are marked
-    human-in-the-loop, matching agentic-access/ki-insurance-agentic-access.yml.
+  scope: The candidate surface is deliberately narrow. The 38 master-data lookups and the admin/telemetry
+    operations are not useful agent tools; the underwriting workflow is. Write tools that commit capacity
+    (firm order note) are marked human-in-the-loop, matching agentic-access/ki-insurance-agentic-access.yml.
 tools:
 - name: search_indications
   description: Suggest indications for an insured by name, domicile country and class of business.
@@ -133,3 +130,9 @@ excluded:
   reason: Read-only reference lookups better served as resources than tools.
 - group: administration, users, telemetry
   reason: Platform administration, not underwriting; out of scope for an agent surface.
+deployment:
+  mode: none
+  verified: derived
+  tools: 24
+  checked: '2026-08-12'
+  source: catalog MCP census
