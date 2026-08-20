@@ -35,6 +35,17 @@ tags:
 - Property and Casualty
 - Underwriting
 - Insurtech
+- Brokers
+- Algorithmic Underwriting
+- Reinsurance
+tags_raw:
+- Insurance
+- United Kingdom
+- Lloyd's of London
+- Specialty Insurance
+- Property and Casualty
+- Underwriting
+- Insurtech
 - Broker
 - Algorithmic Underwriting
 - Reinsurance
@@ -60,6 +71,12 @@ apis:
   humanURL: https://app.ki-insurance.com/
   baseURL: https://app.ki-insurance.com
   tags:
+  - Insurance
+  - Underwriting
+  - Quotes
+  - Lloyd's of London
+  - Brokers
+  tags_raw:
   - Insurance
   - Underwriting
   - Quotes
