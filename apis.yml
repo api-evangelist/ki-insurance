@@ -53,40 +53,16 @@ created: '2026-07-25'
 modified: '2026-07-25'
 specificationVersion: '0.23'
 apis:
-- aid: ki-insurance:broker-platform
-  name: Ki Broker Trading Platform API
-  description: >-
-    The same-origin REST API behind app.ki-insurance.com, the partner-gated broker
-    trading platform where Lloyd's brokers place risks with Ki's follow algorithm.
-    Ki publishes no reference documentation for it; the surface catalogued here was
-    observed verbatim in the endpoint registry Ki's own client ships in its public
-    JavaScript bundle — 102 paths and 109 operations covering quote creation and
-    versioning, algorithmic pricing runs, schedule-of-values upload and geocoding,
-    slip extraction jobs, firm order notes, the broker pipeline and dashboard,
-    leads, users, broking houses and branches, nominated lead syndicates and
-    insurers, Lloyd's risk codes and a large class-of-business master-data surface.
-    Every call carries an Auth0-issued bearer token (issuer
-    https://login.ki-insurance.com/, audience https://api.ki.com); there is no
-    self-serve access.
+- aid: ki-insurance:ki-insurance-administration-api
+  name: Ki Insurance Administration API
+  description: The Administration API from Ki Insurance — 4 operation(s) for administration.
   humanURL: https://app.ki-insurance.com/
   baseURL: https://app.ki-insurance.com
   tags:
-  - Insurance
-  - Underwriting
-  - Quotes
-  - Lloyd's of London
-  - Brokers
-  tags_raw:
-  - Insurance
-  - Underwriting
-  - Quotes
-  - Lloyd's of London
-  - Broker
+  - Administration
   properties:
   - type: OpenAPI
-    url: openapi/ki-insurance-broker-platform-openapi.yml
-  - type: Overlay
-    url: overlays/ki-insurance-broker-platform-overlay.yaml
+    url: openapi/ki-insurance-administration-api-openapi.yml
   - type: Authentication
     url: authentication/ki-insurance-authentication.yml
   - type: ErrorCatalog
@@ -95,8 +71,414 @@ apis:
     url: data-model/ki-insurance-data-model.yml
   - type: Conventions
     url: conventions/ki-insurance-conventions.yml
-  - type: MCPServer
-    url: mcp/ki-insurance-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-broking-houses-api
+  name: Ki Insurance Broking Houses API
+  description: The Broking Houses API from Ki Insurance — 5 operation(s) for broking houses.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Broking Houses
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-broking-houses-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-classes-of-business-api
+  name: Ki Insurance Classes of Business API
+  description: The Classes of Business API from Ki Insurance — 1 operation(s) for classes of business.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Classes of Business
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-classes-of-business-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-configuration-api
+  name: Ki Insurance Configuration API
+  description: The Configuration API from Ki Insurance — 1 operation(s) for configuration.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Configuration
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-configuration-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-dashboard-api
+  name: Ki Insurance Dashboard API
+  description: The Dashboard API from Ki Insurance — 2 operation(s) for dashboard.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Dashboard
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-dashboard-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-facilities-api
+  name: Ki Insurance Facilities API
+  description: The Facilities API from Ki Insurance — 4 operation(s) for facilities.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Facilities
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-facilities-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-indications-api
+  name: Ki Insurance Indications API
+  description: The Indications API from Ki Insurance — 2 operation(s) for indications.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Indications
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-indications-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-leads-api
+  name: Ki Insurance Leads API
+  description: The Leads API from Ki Insurance — 3 operation(s) for leads.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Leads
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-leads-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-market-leaders-api
+  name: Ki Insurance Market Leaders API
+  description: The Market Leaders API from Ki Insurance — 4 operation(s) for market leaders.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Market Leaders
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-market-leaders-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-master-data-api
+  name: Ki Insurance Master Data API
+  description: The Master Data API from Ki Insurance — 39 operation(s) for master data.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Master Data
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-master-data-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-pipeline-api
+  name: Ki Insurance Pipeline API
+  description: The Pipeline API from Ki Insurance — 2 operation(s) for pipeline.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Pipeline
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-pipeline-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-quotes-api
+  name: Ki Insurance Quotes API
+  description: The Quotes API from Ki Insurance — 15 operation(s) for quotes.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Quotes
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-quotes-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-risk-codes-api
+  name: Ki Insurance Risk Codes API
+  description: The Risk Codes API from Ki Insurance — 1 operation(s) for risk codes.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Risk Codes
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-risk-codes-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-schedule-of-values-api
+  name: Ki Insurance Schedule of Values API
+  description: The Schedule of Values API from Ki Insurance — 2 operation(s) for schedule of values.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Schedule of Values
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-schedule-of-values-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-slip-extraction-api
+  name: Ki Insurance Slip Extraction API
+  description: The Slip Extraction API from Ki Insurance — 5 operation(s) for slip extraction.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Slip Extraction
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-slip-extraction-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-support-api
+  name: Ki Insurance Support API
+  description: The Support API from Ki Insurance — 1 operation(s) for support.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Support
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-support-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-telemetry-api
+  name: Ki Insurance Telemetry API
+  description: The Telemetry API from Ki Insurance — 1 operation(s) for telemetry.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Telemetry
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-telemetry-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
+  - type: ToolCrosswalk
+    url: mcp/ki-insurance-tool-crosswalk.yml
+  - type: AgenticAccess
+    url: agentic-access/ki-insurance-agentic-access.yml
+  - type: SignUp
+    url: https://app.ki-insurance.com/
+- aid: ki-insurance:ki-insurance-users-api
+  name: Ki Insurance Users API
+  description: The Users API from Ki Insurance — 10 operation(s) for users.
+  humanURL: https://app.ki-insurance.com/
+  baseURL: https://app.ki-insurance.com
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/ki-insurance-users-api-openapi.yml
+  - type: Authentication
+    url: authentication/ki-insurance-authentication.yml
+  - type: ErrorCatalog
+    url: errors/ki-insurance-problem-types.yml
+  - type: DataModel
+    url: data-model/ki-insurance-data-model.yml
+  - type: Conventions
+    url: conventions/ki-insurance-conventions.yml
   - type: ToolCrosswalk
     url: mcp/ki-insurance-tool-crosswalk.yml
   - type: AgenticAccess
@@ -104,6 +486,8 @@ apis:
   - type: SignUp
     url: https://app.ki-insurance.com/
 common:
+- type: Overlay
+  url: overlays/ki-insurance-broker-platform-overlay.yaml
 - type: Website
   url: https://ki-insurance.com/
 - type: About
