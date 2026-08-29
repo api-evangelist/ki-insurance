@@ -1,7 +1,7 @@
-generated: '2026-07-25'
-method: generated
-source: openapi/ki-insurance-broker-platform-openapi.yml
-note: >-
+x-generated: '2026-07-25'
+x-method: generated
+x-source: openapi/ki-insurance-broker-platform-openapi.yml
+x-note: >-
   Native Arazzo workflows over Ki's observed broker platform API. Every
   operationId is verified against openapi/ki-insurance-broker-platform-openapi.yml.
   These are not runnable without partner-gated Auth0 credentials — Ki publishes no
@@ -20,7 +20,7 @@ workflows:
   summary: >-
     Register a slip upload, execute Ki's extraction job, poll to completion, read
     the structured result and promote it into a quote.
-not_modelled:
+x-not_modelled:
 - workflow: issue a firm order note
   reason: >-
     createQuoteFirmOrderNoteV2 commits Ki's follow capacity and is classified

@@ -10,8 +10,20 @@ info:
     bundle. Running this workflow requires partner Auth0 credentials — Ki has no
     sandbox and no self-serve signup, so no example inputs are seeded.
 sourceDescriptions:
-- name: kiBrokerPlatform
-  url: ../openapi/ki-insurance-broker-platform-openapi.yml
+- name: classesOfBusinessApi
+  url: ../openapi/ki-insurance-classes-of-business-api-openapi.yml
+  type: openapi
+- name: marketLeadersApi
+  url: ../openapi/ki-insurance-market-leaders-api-openapi.yml
+  type: openapi
+- name: quotesApi
+  url: ../openapi/ki-insurance-quotes-api-openapi.yml
+  type: openapi
+- name: riskCodesApi
+  url: ../openapi/ki-insurance-risk-codes-api-openapi.yml
+  type: openapi
+- name: usersApi
+  url: ../openapi/ki-insurance-users-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: quote-and-price

@@ -9,8 +9,11 @@ info:
     an API Evangelist derivation from Ki's published client bundle. Partner Auth0
     credentials are required; Ki publishes no sandbox.
 sourceDescriptions:
-- name: kiBrokerPlatform
-  url: ../openapi/ki-insurance-broker-platform-openapi.yml
+- name: quotesApi
+  url: ../openapi/ki-insurance-quotes-api-openapi.yml
+  type: openapi
+- name: slipExtractionApi
+  url: ../openapi/ki-insurance-slip-extraction-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: slip-to-quote
