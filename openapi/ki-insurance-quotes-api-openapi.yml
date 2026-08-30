@@ -1,0 +1,636 @@
+openapi: 3.2.0
+info:
+  title: Ki Broker Trading Platform API (observed) Quotes API
+  version: '2026-07-25'
+  summary: Observed HTTP surface of Ki's partner-gated broker trading platform.
+  description: '**This is an API Evangelist DERIVED specification, not a Ki-published document.**
+
+
+    Ki (Lloyd''s Syndicate 1618) publishes no developer portal, no API reference and no OpenAPI. This document was derived on 2026-07-25 from the endpoint registry that Ki''s own broker platform ships in its public JavaScript bundle at `https://app.ki-insurance.com/assets/index-DgeF7w2c.js`. Every path and every HTTP method below was observed verbatim in that bundle, together with the request helpers (`GET`/`POST`/`PUT`/`DELETE`) that call them.
+
+
+    What is REAL here: path templates, HTTP methods, query-parameter names, the `Authorization: Bearer` scheme, the `application/json` content negotiation, and the 401/403/503 handling the client implements.
+
+
+    What is NOT specified: request and response schemas. Ki does not publish them and they are left empty rather than invented. Path-parameter NAMES are assigned by API Evangelist because the minified bundle does not retain them.
+
+
+    The API is partner-gated: access requires an Auth0 authorization-code login at `https://login.ki-insurance.com/` against audience `https://api.ki.com`. There is no self-serve signup.'
+  contact:
+    name: Ki Insurance
+    url: https://ki-insurance.com/
+  x-apievangelist-derivation:
+    method: derived
+    source: https://app.ki-insurance.com/assets/index-DgeF7w2c.js
+    observed: '2026-07-25'
+    note: Not a provider-published specification. Do not treat as a Ki contract.
+  x-observed-endpoints-unmapped:
+  - path: /api/user/current/logout
+    registry_key: user.logout
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+  - path: /api/quote/{p1}/sov
+    registry_key: quote.uploadSov
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+  - path: /api/quote/{p1}/pdf/subjectivities
+    registry_key: subjectivities
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+  - path: /api/umr/master-line-slip
+    registry_key: uniqueMarketReference.masterLineSlip
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+  - path: /api/indications/consents
+    registry_key: indicationsConsent.list
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+  - path: /api/indications/affirm
+    registry_key: indicationsConsent.consent
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+servers:
+- url: https://app.ki-insurance.com
+  description: Ki broker trading platform (same-origin API; partner-gated)
+security:
+- auth0Bearer: []
+tags:
+- name: Quotes
+paths:
+  /api/quote:
+    post:
+      operationId: createQuote
+      summary: Create a quote
+      description: Observed in the Ki broker platform client bundle as `quote.create` -> `POST /api/quote`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.create
+      x-observed-method-evidence: explicit POST helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+  /api/quote-detail/coverage-option/{quoteId}:
+    get:
+      operationId: getQuoteCoverageOptionMapping
+      summary: Retrieve coverage-option mapping for a quote
+      description: Observed in the Ki broker platform client bundle as `quote.coverageOptionMapping` -> `GET /api/quote-detail/coverage-option/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.coverageOptionMapping
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/quote-detail/{quoteId}:
+    get:
+      operationId: getQuoteDetail
+      summary: Retrieve quote detail
+      description: Observed in the Ki broker platform client bundle as `quote.detail` -> `GET /api/quote-detail/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.detail
+      x-observed-method-evidence: call-site proximity in the client bundle
+      x-observed-confidence: medium
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: string
+    post:
+      operationId: createQuoteDetail
+      summary: Retrieve quote detail
+      description: Observed in the Ki broker platform client bundle as `quote.detail` -> `POST /api/quote-detail/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.detail
+      x-observed-method-evidence: call-site proximity in the client bundle
+      x-observed-confidence: medium
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+  /api/quote/firm-order-notice/cob-cc-emails:
+    get:
+      operationId: getQuoteFonCcEmails
+      summary: Retrieve firm-order-notice cc email addresses by class of business
+      description: Observed in the Ki broker platform client bundle as `quote.fonCcEmails` -> `GET /api/quote/firm-order-notice/cob-cc-emails`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.fonCcEmails
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/quote/indication/{indicationId}:
+    post:
+      operationId: createQuoteFromIndication
+      summary: Create a quote from an indication
+      description: Observed in the Ki broker platform client bundle as `quote.createFromIndication` -> `POST /api/quote/indication/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.createFromIndication
+      x-observed-method-evidence: explicit POST helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: indicationId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+  /api/quote/v2/{quoteId}/firm-order-note:
+    post:
+      operationId: createQuoteFirmOrderNoteV2
+      summary: Issue a firm order note for a quote
+      description: Observed in the Ki broker platform client bundle as `quote.firmOrderNoteV2` -> `POST /api/quote/v2/${e}/firm-order-note`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.firmOrderNoteV2
+      x-observed-method-evidence: explicit POST helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+  /api/quote/{quoteId}:
+    get:
+      operationId: getQuoteById
+      summary: Retrieve a quote
+      description: Observed in the Ki broker platform client bundle as `quote.quoteById` -> `GET /api/quote/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.quoteById
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: string
+    put:
+      operationId: updateQuoteById
+      summary: Update a quote
+      description: Observed in the Ki broker platform client bundle as `quote.quoteById` -> `PUT /api/quote/${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.quoteById
+      x-observed-method-evidence: explicit PUT helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+  /api/quote/{quoteId}/discard:
+    put:
+      operationId: updateQuoteDiscard
+      summary: Discard a quote
+      description: Observed in the Ki broker platform client bundle as `quote.discard` -> `PUT /api/quote/${e}/discard`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.discard
+      x-observed-method-evidence: explicit PUT helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+  /api/quote/{quoteId}/pdf:
+    get:
+      operationId: getQuotePdf
+      summary: Download the quote document
+      description: Observed in the Ki broker platform client bundle as `quote.pdf` -> `GET /api/quote/${e}/pdf`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.pdf
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/quote/{quoteId}/quoteline/{quoteLineId}:
+    delete:
+      operationId: deleteQuote
+      summary: Delete a quote line
+      description: Observed in the Ki broker platform client bundle as `quote.delete` -> `DELETE /api/quote/${e}/quoteline/${t}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.delete
+      x-observed-method-evidence: explicit DELETE helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: quoteLineId
+        in: path
+        required: true
+        schema:
+          type: string
+  /api/quote/{quoteId}/sov:
+    post:
+      operationId: createQuoteSov
+      summary: Upload or replace the schedule of values for a quote
+      description: Observed in the Ki broker platform client bundle as `quote.sov` -> `POST /api/quote/${e}/sov`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.sov
+      x-observed-method-evidence: explicit POST helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+    put:
+      operationId: updateQuoteSov
+      summary: Upload or replace the schedule of values for a quote
+      description: Observed in the Ki broker platform client bundle as `quote.sov` -> `PUT /api/quote/${e}/sov`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.sov
+      x-observed-method-evidence: explicit PUT helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+  /api/quote/{quoteId}/startPricing:
+    put:
+      operationId: updateQuoteStartPricing
+      summary: Start algorithmic pricing for a quote
+      description: Observed in the Ki broker platform client bundle as `quote.startPricing` -> `PUT /api/quote/${e}/startPricing`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.startPricing
+      x-observed-method-evidence: explicit PUT helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+  /api/quote/{quoteId}/version:
+    post:
+      operationId: createQuoteVersion
+      summary: Create a new version of a quote
+      description: Observed in the Ki broker platform client bundle as `quote.createVersion` -> `POST /api/quote/${e}/version`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.createVersion
+      x-observed-method-evidence: explicit POST helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+  /api/quote/{quoteId}/{quoteLineId}/geocodingJobs:
+    post:
+      operationId: createQuoteProcessSov
+      summary: Start geocoding jobs for a quote schedule of values
+      description: Observed in the Ki broker platform client bundle as `quote.processSov` -> `POST /api/quote/${e}/${t}/geocodingJobs`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.processSov
+      x-observed-method-evidence: explicit POST helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: quoteId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: quoteLineId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+  /api/vessel/v2/validate:
+    post:
+      operationId: createQuoteValidateVessels
+      summary: Validate a marine vessel schedule
+      description: Observed in the Ki broker platform client bundle as `quote.validateVessels` -> `POST /api/vessel/v2/validate`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Quotes
+      x-observed-registry-key: quote.validateVessels
+      x-observed-method-evidence: explicit POST helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+components:
+  responses:
+    Maintenance:
+      description: Service unavailable. The client routes the user to the maintenance page.
+    Forbidden:
+      description: Forbidden. The client routes the user to the forbidden page.
+    Unauthorized:
+      description: Unauthorized. The client clears the session and returns the user to login.
+  securitySchemes:
+    auth0Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Auth0-issued access token. The client attaches `Authorization: Bearer <token>` to every call. Issuer `https://login.ki-insurance.com/`, audience `https://api.ki.com`.'
+    auth0OpenId:
+      type: openIdConnect
+      openIdConnectUrl: https://login.ki-insurance.com/.well-known/openid-configuration
+      description: Auth0 OIDC discovery for the partner login (authorization code + PKCE).

@@ -1,0 +1,949 @@
+openapi: 3.2.0
+info:
+  title: Ki Broker Trading Platform API (observed) Master Data API
+  version: '2026-07-25'
+  summary: Observed HTTP surface of Ki's partner-gated broker trading platform.
+  description: '**This is an API Evangelist DERIVED specification, not a Ki-published document.**
+
+
+    Ki (Lloyd''s Syndicate 1618) publishes no developer portal, no API reference and no OpenAPI. This document was derived on 2026-07-25 from the endpoint registry that Ki''s own broker platform ships in its public JavaScript bundle at `https://app.ki-insurance.com/assets/index-DgeF7w2c.js`. Every path and every HTTP method below was observed verbatim in that bundle, together with the request helpers (`GET`/`POST`/`PUT`/`DELETE`) that call them.
+
+
+    What is REAL here: path templates, HTTP methods, query-parameter names, the `Authorization: Bearer` scheme, the `application/json` content negotiation, and the 401/403/503 handling the client implements.
+
+
+    What is NOT specified: request and response schemas. Ki does not publish them and they are left empty rather than invented. Path-parameter NAMES are assigned by API Evangelist because the minified bundle does not retain them.
+
+
+    The API is partner-gated: access requires an Auth0 authorization-code login at `https://login.ki-insurance.com/` against audience `https://api.ki.com`. There is no self-serve signup.'
+  contact:
+    name: Ki Insurance
+    url: https://ki-insurance.com/
+  x-apievangelist-derivation:
+    method: derived
+    source: https://app.ki-insurance.com/assets/index-DgeF7w2c.js
+    observed: '2026-07-25'
+    note: Not a provider-published specification. Do not treat as a Ki contract.
+  x-observed-endpoints-unmapped:
+  - path: /api/user/current/logout
+    registry_key: user.logout
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+  - path: /api/quote/{p1}/sov
+    registry_key: quote.uploadSov
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+  - path: /api/quote/{p1}/pdf/subjectivities
+    registry_key: subjectivities
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+  - path: /api/umr/master-line-slip
+    registry_key: uniqueMarketReference.masterLineSlip
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+  - path: /api/indications/consents
+    registry_key: indicationsConsent.list
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+  - path: /api/indications/affirm
+    registry_key: indicationsConsent.consent
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+servers:
+- url: https://app.ki-insurance.com
+  description: Ki broker trading platform (same-origin API; partner-gated)
+security:
+- auth0Bearer: []
+tags:
+- name: Master Data
+paths:
+  /api/masterdata/compliance/search:
+    get:
+      operationId: getMasterdataCompliance
+      summary: Search compliance master data
+      description: Observed in the Ki broker platform client bundle as `masterdata.compliance` -> `GET /api/masterdata/compliance/search?iso2=${e}&query=${t}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.compliance
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: iso2
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Query parameter observed verbatim in the published client bundle.
+      - name: query
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Query parameter observed verbatim in the published client bundle.
+  /api/masterdata/ki/cargointeresttypes:
+    get:
+      operationId: getMasterdataCargoInterests
+      summary: Get interests
+      description: Observed in the Ki broker platform client bundle as `masterdata.cargo.interests` -> `GET /api/masterdata/ki/cargointeresttypes`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cargo.interests
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cargoprojectdsudeductibledays:
+    get:
+      operationId: getMasterdataCargoDeductibles
+      summary: Get deductibles
+      description: Observed in the Ki broker platform client bundle as `masterdata.cargo.deductibles` -> `GET /api/masterdata/ki/cargoprojectdsudeductibledays`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cargo.deductibles
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/contingencyagerange:
+    get:
+      operationId: getMasterdataContingencyAgeRange
+      summary: Get ageRange
+      description: Observed in the Ki broker platform client bundle as `masterdata.contingency.ageRange` -> `GET /api/masterdata/ki/contingencyagerange`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.contingency.ageRange
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/contingencydeductibletype:
+    get:
+      operationId: getMasterdataContingencyDeductibleType
+      summary: Get deductibleType
+      description: Observed in the Ki broker platform client bundle as `masterdata.contingency.deductibleType` -> `GET /api/masterdata/ki/contingencydeductibletype`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.contingency.deductibleType
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/contingencyeventdescription:
+    get:
+      operationId: getMasterdataContingencyEventDescription
+      summary: Get eventDescription
+      description: Observed in the Ki broker platform client bundle as `masterdata.contingency.eventDescription` -> `GET /api/masterdata/ki/contingencyeventdescription`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.contingency.eventDescription
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/contingencynonappearancegroup:
+    get:
+      operationId: getMasterdataContingencyNonApperanceGroup
+      summary: Get nonApperanceGroup
+      description: Observed in the Ki broker platform client bundle as `masterdata.contingency.nonApperanceGroup` -> `GET /api/masterdata/ki/contingencynonappearancegroup`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.contingency.nonApperanceGroup
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cyberbicoveragestype:
+    get:
+      operationId: getMasterdataCyberKiBicoveragetype
+      summary: Get bicoveragetype
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.bicoveragetype` -> `GET /api/masterdata/ki/cyberbicoveragestype`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.bicoveragetype
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cyberbicoverincluded:
+    get:
+      operationId: getMasterdataCyberKiBi
+      summary: Get bi
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.bi` -> `GET /api/masterdata/ki/cyberbicoverincluded`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.bi
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cyberbiosptype:
+    get:
+      operationId: getMasterdataCyberKiBiosptype
+      summary: Get biosptype
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.biosptype` -> `GET /api/masterdata/ki/cyberbiosptype`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.biosptype
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cyberbiunscheduleosp:
+    get:
+      operationId: getMasterdataCyberKiBiospunschedule
+      summary: Get biospunschedule
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.biospunschedule` -> `GET /api/masterdata/ki/cyberbiunscheduleosp`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.biospunschedule
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cyberdeductible:
+    get:
+      operationId: getMasterdataCyberKiDeductiblebasis
+      summary: Get deductiblebasis
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.deductiblebasis` -> `GET /api/masterdata/ki/cyberdeductible`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.deductiblebasis
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cyberexcessbasis:
+    get:
+      operationId: getMasterdataCyberKiExcessbasis
+      summary: Get excessbasis
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.excessbasis` -> `GET /api/masterdata/ki/cyberexcessbasis`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.excessbasis
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cyberindustrysector:
+    get:
+      operationId: getMasterdataCyberKiIndustrySectors
+      summary: Get industrySectors
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.industrySectors` -> `GET /api/masterdata/ki/cyberindustrysector`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.industrySectors
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cyberlimitbasis:
+    get:
+      operationId: getMasterdataCyberKiLimitbasis
+      summary: Get limitbasis
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.limitbasis` -> `GET /api/masterdata/ki/cyberlimitbasis`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.limitbasis
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cybernoofrecords:
+    get:
+      operationId: getMasterdataCyberKiNoOfRecords
+      summary: Get noOfRecords
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.noOfRecords` -> `GET /api/masterdata/ki/cybernoofrecords`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.noOfRecords
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cybernooftransactions:
+    get:
+      operationId: getMasterdataCyberKiNoOfTransactions
+      summary: Get noOfTransactions
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.noOfTransactions` -> `GET /api/masterdata/ki/cybernooftransactions`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.noOfTransactions
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cyberorganisationtype:
+    get:
+      operationId: getMasterdataCyberKiOrganisationtype
+      summary: Get organisationtype
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.organisationtype` -> `GET /api/masterdata/ki/cyberorganisationtype`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.organisationtype
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cyberpcicompliant:
+    get:
+      operationId: getMasterdataCyberKiPcicompliant
+      summary: Get pcicompliant
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.pcicompliant` -> `GET /api/masterdata/ki/cyberpcicompliant`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.pcicompliant
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cyberproducts:
+    get:
+      operationId: getMasterdataCyberKiProducts
+      summary: Get products
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.products` -> `GET /api/masterdata/ki/cyberproducts`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.products
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cyberreinstatements:
+    get:
+      operationId: getMasterdataCyberKiReinstatements
+      summary: Get reinstatements
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.reinstatements` -> `GET /api/masterdata/ki/cyberreinstatements`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.reinstatements
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cyberreinstatementsType:
+    get:
+      operationId: getMasterdataCyberKiReinstatementstype
+      summary: Get reinstatementstype
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.reinstatementstype` -> `GET /api/masterdata/ki/cyberreinstatementsType`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.reinstatementstype
+      x-observed-method-evidence: call-site proximity in the client bundle
+      x-observed-confidence: medium
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cyberretrooption:
+    get:
+      operationId: getMasterdataCyberKiRetroactiveDates
+      summary: Get retroactiveDates
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.retroactiveDates` -> `GET /api/masterdata/ki/cyberretrooption`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.retroactiveDates
+      x-observed-method-evidence: call-site proximity in the client bundle
+      x-observed-confidence: medium
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cybertechdisciplines:
+    get:
+      operationId: getMasterdataCyberKiTechdisciplines
+      summary: Get techdisciplines
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.techdisciplines` -> `GET /api/masterdata/ki/cybertechdisciplines`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.techdisciplines
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/cyberwarexclusion:
+    get:
+      operationId: getMasterdataCyberKiWarexclusion
+      summary: Get warexclusion
+      description: Observed in the Ki broker platform client bundle as `masterdata.cyber.ki.warexclusion` -> `GET /api/masterdata/ki/cyberwarexclusion`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.cyber.ki.warexclusion
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/doindustry:
+    get:
+      operationId: getMasterdataDoIndustry
+      summary: Get industry
+      description: Observed in the Ki broker platform client bundle as `masterdata.do.industry` -> `GET /api/masterdata/ki/doindustry`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.do.industry
+      x-observed-method-evidence: call-site proximity in the client bundle
+      x-observed-confidence: medium
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/energy-liability-number-employees:
+    get:
+      operationId: getMasterdataEnergyLiabilityNumberEmployees
+      summary: Get numberEmployees
+      description: Observed in the Ki broker platform client bundle as `masterdata.energyLiability.numberEmployees` -> `GET /api/masterdata/ki/energy-liability-number-employees`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.energyLiability.numberEmployees
+      x-observed-method-evidence: call-site proximity in the client bundle
+      x-observed-confidence: medium
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/fiinstitution:
+    get:
+      operationId: getMasterdataFiInstitutionType
+      summary: Get institutionType
+      description: Observed in the Ki broker platform client bundle as `masterdata.fi.institutionType` -> `GET /api/masterdata/ki/fiinstitution`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.fi.institutionType
+      x-observed-method-evidence: call-site proximity in the client bundle
+      x-observed-confidence: medium
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/gethqcountrylist:
+    get:
+      operationId: getMasterdataHqCountries
+      summary: Get countries
+      description: Observed in the Ki broker platform client bundle as `masterdata.hq.countries` -> `GET /api/masterdata/ki/gethqcountrylist`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.hq.countries
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/gethqstatecanadalist:
+    get:
+      operationId: getMasterdataHqCaStates
+      summary: Get caStates
+      description: Observed in the Ki broker platform client bundle as `masterdata.hq.caStates` -> `GET /api/masterdata/ki/gethqstatecanadalist`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.hq.caStates
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/gethqstateuslist:
+    get:
+      operationId: getMasterdataHqUsStates
+      summary: Get usStates
+      description: Observed in the Ki broker platform client bundle as `masterdata.hq.usStates` -> `GET /api/masterdata/ki/gethqstateuslist`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.hq.usStates
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/hqstateaustralia:
+    get:
+      operationId: getMasterdataHqAuStates
+      summary: Get auStates
+      description: Observed in the Ki broker platform client bundle as `masterdata.hq.auStates` -> `GET /api/masterdata/ki/hqstateaustralia`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.hq.auStates
+      x-observed-method-evidence: shared masterdata lookup hook (GET helper `oq`)
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/noofproperties:
+    get:
+      operationId: getMasterdataPropertyNoOfProperties
+      summary: Get noOfProperties
+      description: Observed in the Ki broker platform client bundle as `masterdata.property.noOfProperties` -> `GET /api/masterdata/ki/noofproperties`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.property.noOfProperties
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/pilimittypes:
+    get:
+      operationId: getMasterdataPiLimitTypes
+      summary: Get limitTypes
+      description: Observed in the Ki broker platform client bundle as `masterdata.pi.limitTypes` -> `GET /api/masterdata/ki/pilimittypes`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.pi.limitTypes
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/placingbases:
+    get:
+      operationId: getMasterdataPlacingbases
+      summary: Get placingbases
+      description: Observed in the Ki broker platform client bundle as `masterdata.placingbases` -> `GET /api/masterdata/ki/placingbases?filter=${e}`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.placingbases
+      x-observed-method-evidence: call-site proximity in the client bundle
+      x-observed-confidence: medium
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      parameters:
+      - name: filter
+        in: query
+        required: false
+        schema:
+          type: string
+        description: Query parameter observed verbatim in the published client bundle.
+  /api/masterdata/ki/propertylocations:
+    get:
+      operationId: getMasterdataPropertyLocations
+      summary: Get locations
+      description: Observed in the Ki broker platform client bundle as `masterdata.property.locations` -> `GET /api/masterdata/ki/propertylocations`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.property.locations
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/propertyoccupancies:
+    get:
+      operationId: getMasterdataPropertyOccupancies
+      summary: Get occupancies
+      description: Observed in the Ki broker platform client bundle as `masterdata.property.occupancies` -> `GET /api/masterdata/ki/propertyoccupancies`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.property.occupancies
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/propertyperils:
+    get:
+      operationId: getMasterdataPropertyPerils
+      summary: Get perils
+      description: Observed in the Ki broker platform client bundle as `masterdata.property.perils` -> `GET /api/masterdata/ki/propertyperils`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.property.perils
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+  /api/masterdata/ki/territories:
+    get:
+      operationId: getMasterdataTerritories
+      summary: Get territories
+      description: Observed in the Ki broker platform client bundle as `masterdata.territories` -> `GET /api/masterdata/ki/territories`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Master Data
+      x-observed-registry-key: masterdata.territories
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+components:
+  responses:
+    Maintenance:
+      description: Service unavailable. The client routes the user to the maintenance page.
+    Forbidden:
+      description: Forbidden. The client routes the user to the forbidden page.
+    Unauthorized:
+      description: Unauthorized. The client clears the session and returns the user to login.
+  securitySchemes:
+    auth0Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Auth0-issued access token. The client attaches `Authorization: Bearer <token>` to every call. Issuer `https://login.ki-insurance.com/`, audience `https://api.ki.com`.'
+    auth0OpenId:
+      type: openIdConnect
+      openIdConnectUrl: https://login.ki-insurance.com/.well-known/openid-configuration
+      description: Auth0 OIDC discovery for the partner login (authorization code + PKCE).

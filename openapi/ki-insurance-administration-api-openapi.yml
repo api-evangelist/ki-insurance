@@ -1,0 +1,225 @@
+openapi: 3.2.0
+info:
+  title: Ki Broker Trading Platform API (observed) Administration API
+  version: '2026-07-25'
+  summary: Observed HTTP surface of Ki's partner-gated broker trading platform.
+  description: '**This is an API Evangelist DERIVED specification, not a Ki-published document.**
+
+
+    Ki (Lloyd''s Syndicate 1618) publishes no developer portal, no API reference and no OpenAPI. This document was derived on 2026-07-25 from the endpoint registry that Ki''s own broker platform ships in its public JavaScript bundle at `https://app.ki-insurance.com/assets/index-DgeF7w2c.js`. Every path and every HTTP method below was observed verbatim in that bundle, together with the request helpers (`GET`/`POST`/`PUT`/`DELETE`) that call them.
+
+
+    What is REAL here: path templates, HTTP methods, query-parameter names, the `Authorization: Bearer` scheme, the `application/json` content negotiation, and the 401/403/503 handling the client implements.
+
+
+    What is NOT specified: request and response schemas. Ki does not publish them and they are left empty rather than invented. Path-parameter NAMES are assigned by API Evangelist because the minified bundle does not retain them.
+
+
+    The API is partner-gated: access requires an Auth0 authorization-code login at `https://login.ki-insurance.com/` against audience `https://api.ki.com`. There is no self-serve signup.'
+  contact:
+    name: Ki Insurance
+    url: https://ki-insurance.com/
+  x-apievangelist-derivation:
+    method: derived
+    source: https://app.ki-insurance.com/assets/index-DgeF7w2c.js
+    observed: '2026-07-25'
+    note: Not a provider-published specification. Do not treat as a Ki contract.
+  x-observed-endpoints-unmapped:
+  - path: /api/user/current/logout
+    registry_key: user.logout
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+  - path: /api/quote/{p1}/sov
+    registry_key: quote.uploadSov
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+  - path: /api/quote/{p1}/pdf/subjectivities
+    registry_key: subjectivities
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+  - path: /api/umr/master-line-slip
+    registry_key: uniqueMarketReference.masterLineSlip
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+  - path: /api/indications/consents
+    registry_key: indicationsConsent.list
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+  - path: /api/indications/affirm
+    registry_key: indicationsConsent.consent
+    note: endpoint observed in the client registry; HTTP method not determinable from the minified bundle
+servers:
+- url: https://app.ki-insurance.com
+  description: Ki broker trading platform (same-origin API; partner-gated)
+security:
+- auth0Bearer: []
+tags:
+- name: Administration
+paths:
+  /api/maxlinesizes:
+    post:
+      operationId: createAdminUploadMaxLineSize
+      summary: Upload max-line-size configuration
+      description: Observed in the Ki broker platform client bundle as `admin.uploadMaxLineSize` -> `POST /api/maxlinesizes`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Administration
+      x-observed-registry-key: admin.uploadMaxLineSize
+      x-observed-method-evidence: explicit POST helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+  /api/maxlinesizes/validate:
+    post:
+      operationId: createAdminValidateMaxLineSize
+      summary: Validate an uploaded max-line-size file
+      description: Observed in the Ki broker platform client bundle as `admin.validateMaxLineSize` -> `POST /api/maxlinesizes/validate`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Administration
+      x-observed-registry-key: admin.validateMaxLineSize
+      x-observed-method-evidence: explicit POST helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+  /api/system/admin/maintenance-mode:
+    get:
+      operationId: getAdminMaintenance
+      summary: Retrieve maintenance-mode state
+      description: Observed in the Ki broker platform client bundle as `admin.maintenance` -> `GET /api/system/admin/maintenance-mode`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Administration
+      x-observed-registry-key: admin.maintenance
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+    put:
+      operationId: updateAdminMaintenance
+      summary: Set maintenance-mode state
+      description: Observed in the Ki broker platform client bundle as `admin.maintenance` -> `PUT /api/system/admin/maintenance-mode`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Administration
+      x-observed-registry-key: admin.maintenance
+      x-observed-method-evidence: explicit PUT helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+  /api/system/admin/settings:
+    get:
+      operationId: getAdminSettings
+      summary: Retrieve platform admin settings
+      description: Observed in the Ki broker platform client bundle as `admin.settings` -> `GET /api/system/admin/settings`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Administration
+      x-observed-registry-key: admin.settings
+      x-observed-method-evidence: explicit GET helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+    put:
+      operationId: updateAdminSettings
+      summary: Update platform admin settings
+      description: Observed in the Ki broker platform client bundle as `admin.settings` -> `PUT /api/system/admin/settings`. Request and response schemas are not published by Ki and are deliberately left unspecified rather than invented.
+      tags:
+      - Administration
+      x-observed-registry-key: admin.settings
+      x-observed-method-evidence: explicit PUT helper call site
+      x-observed-confidence: high
+      responses:
+        '200':
+          description: Successful response. Ki does not publish the response schema.
+          content:
+            application/json:
+              schema: {}
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '503':
+          $ref: '#/components/responses/Maintenance'
+      requestBody:
+        required: true
+        description: JSON request body. Ki does not publish the request schema.
+        content:
+          application/json:
+            schema: {}
+components:
+  responses:
+    Maintenance:
+      description: Service unavailable. The client routes the user to the maintenance page.
+    Forbidden:
+      description: Forbidden. The client routes the user to the forbidden page.
+    Unauthorized:
+      description: Unauthorized. The client clears the session and returns the user to login.
+  securitySchemes:
+    auth0Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: 'Auth0-issued access token. The client attaches `Authorization: Bearer <token>` to every call. Issuer `https://login.ki-insurance.com/`, audience `https://api.ki.com`.'
+    auth0OpenId:
+      type: openIdConnect
+      openIdConnectUrl: https://login.ki-insurance.com/.well-known/openid-configuration
+      description: Auth0 OIDC discovery for the partner login (authorization code + PKCE).
