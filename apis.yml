@@ -479,6 +479,8 @@ apis:
   humanURL: https://app.ki-insurance.com/
   baseURL: https://app.ki-insurance.com
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
