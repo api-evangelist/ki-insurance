@@ -181,6 +181,8 @@ apis:
   humanURL: https://app.ki-insurance.com/
   baseURL: https://app.ki-insurance.com
   tags:
+  - Dashboards
+  tags_raw:
   - Dashboard
   properties:
   - type: OpenAPI
@@ -325,6 +327,8 @@ apis:
   humanURL: https://app.ki-insurance.com/
   baseURL: https://app.ki-insurance.com
   tags:
+  - Pipelines
+  tags_raw:
   - Pipeline
   properties:
   - type: OpenAPI
