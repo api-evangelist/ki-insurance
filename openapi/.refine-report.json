@@ -1,0 +1,54 @@
+{
+  "provider": "ki-insurance",
+  "sources": [
+    "_original/ki-insurance-broker-platform-openapi.yml"
+  ],
+  "outputs": [
+    "ki-insurance-administration-api-openapi.yml",
+    "ki-insurance-broking-houses-api-openapi.yml",
+    "ki-insurance-classes-of-business-api-openapi.yml",
+    "ki-insurance-configuration-api-openapi.yml",
+    "ki-insurance-dashboard-api-openapi.yml",
+    "ki-insurance-facilities-api-openapi.yml",
+    "ki-insurance-indications-api-openapi.yml",
+    "ki-insurance-leads-api-openapi.yml",
+    "ki-insurance-market-leaders-api-openapi.yml",
+    "ki-insurance-master-data-api-openapi.yml",
+    "ki-insurance-pipeline-api-openapi.yml",
+    "ki-insurance-quotes-api-openapi.yml",
+    "ki-insurance-risk-codes-api-openapi.yml",
+    "ki-insurance-schedule-of-values-api-openapi.yml",
+    "ki-insurance-slip-extraction-api-openapi.yml",
+    "ki-insurance-support-api-openapi.yml",
+    "ki-insurance-telemetry-api-openapi.yml",
+    "ki-insurance-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "ki-insurance-broker-platform-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "ki-insurance-administration-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-broking-houses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-classes-of-business-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-configuration-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-dashboard-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-facilities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-indications-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-leads-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-market-leaders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-master-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-pipeline-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-quotes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-risk-codes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-schedule-of-values-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-slip-extraction-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-support-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-telemetry-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ki-insurance-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
