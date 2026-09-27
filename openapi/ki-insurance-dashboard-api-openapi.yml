@@ -114,12 +114,12 @@ paths:
         description: Query parameter observed verbatim in the published client bundle.
 components:
   responses:
-    Forbidden:
-      description: Forbidden. The client routes the user to the forbidden page.
-    Maintenance:
-      description: Service unavailable. The client routes the user to the maintenance page.
     Unauthorized:
       description: Unauthorized. The client clears the session and returns the user to login.
+    Maintenance:
+      description: Service unavailable. The client routes the user to the maintenance page.
+    Forbidden:
+      description: Forbidden. The client routes the user to the forbidden page.
   securitySchemes:
     auth0Bearer:
       type: http
