@@ -609,12 +609,12 @@ paths:
             schema: {}
 components:
   responses:
-    Maintenance:
-      description: Service unavailable. The client routes the user to the maintenance page.
     Forbidden:
       description: Forbidden. The client routes the user to the forbidden page.
     Unauthorized:
       description: Unauthorized. The client clears the session and returns the user to login.
+    Maintenance:
+      description: Service unavailable. The client routes the user to the maintenance page.
   securitySchemes:
     auth0Bearer:
       type: http
