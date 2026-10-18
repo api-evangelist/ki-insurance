@@ -61,7 +61,7 @@ tags:
 - Property and Casualty
 - Underwriting
 - Insurtech
-- Brokers
+- Brokerage
 - Algorithmic Underwriting
 - Reinsurance
 tags_raw:
@@ -75,6 +75,7 @@ tags_raw:
 - Broker
 - Algorithmic Underwriting
 - Reinsurance
+- Brokers
 created: '2026-07-25'
 modified: '2026-07-25'
 specificationVersion: '0.23'
