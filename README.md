@@ -1,4 +1,4 @@
-# Ki Insurance (ki-insurance)
+# Ki Insurance
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,62 +64,143 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Ki is the first fully digital, algorithmically driven syndicate at Lloyd's of London — Syndicate 1618 — launched in 2020 out of Brit with Google Cloud and University College London, and capitalised with US$500m from Blackstone Tactical Opportunities and Fairfax Financial. Operating from the United Kingdom, Ki writes follow-only capacity across property, casualty and specialty lines, quoting risks a lead underwriter has already priced in seconds rather than days.
+Ki is the first fully digital, algorithmically driven syndicate at Lloyd's of London, launched in 2020 out of Brit with Google Cloud and University College London and capitalised with US$500m from Blackstone Tactical Opportunities and Fairfax Financial. Operating from the United Kingdom as Lloyd's Syndicate 1618, Ki writes follow-only capacity across specialty lines — property, casualty and specialty — quoting risks that a lead underwriter has already priced, in seconds rather than days, through an algorithm rather than a face-to-face negotiation in the Room. Brokers reach Ki through app.ki-insurance.com, a partner-gated single-page platform behind an Auth0 authorization-code login, and Ki announced a "Broker API" in May 2021 that lets partner broking platforms request quotes directly from the algorithm. That API posture is entirely partner-gated: there is no developer portal, no public reference documentation, no self-serve signup, no provider-published OpenAPI or Postman collection, and no public webhook or event catalog. What is observable is the platform API itself — Ki's own broker client ships a complete endpoint registry in its public JavaScript bundle, exposing a same-origin REST surface of roughly a hundred JSON operations across quotes, quote lines, pricing, schedules of values, slip extraction, leads, pipeline, broking houses, nominated leads and Lloyd's risk codes, all authorised with an Auth0 bearer token. API Evangelist has derived an observed OpenAPI from that bundle. Ki remains the archetype of the United Kingdom's London-market pattern: genuinely advanced machine-to-machine insurance placement infrastructure, aimed at brokers and syndicates rather than at developers, and therefore effectively invisible from the outside.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/ki-insurance/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/ki-insurance/refs/heads/main/apis.yml)
+**Areas:** Insurance · United Kingdom · Lloyd's of London · Specialty Insurance · Property and Casualty · Underwriting · Insurtech · Brokerage · Algorithmic Underwriting · Reinsurance
 
-## Tags
+## Ki Insurance on APIs.io
 
-- Insurance
-- United Kingdom
-- Lloyd's of London
-- Specialty Insurance
-- Property and Casualty
-- Underwriting
-- Insurtech
-- Broker
-- Algorithmic Underwriting
-- Reinsurance
+Everything profiled for Ki Insurance is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ki-insurance/](https://apis.io/providers/ki-insurance/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (18)
 
-- **Created:** 2026-07-25
-- **Modified:** 2026-07-25
+- [Ki Insurance Administration API](https://apis.io/apis/ki-insurance/ki-insurance-administration-api/) — The Administration API from Ki Insurance — 4 operation(s) for administration.
+- [Ki Insurance Broking Houses API](https://apis.io/apis/ki-insurance/ki-insurance-broking-houses-api/) — The Broking Houses API from Ki Insurance — 5 operation(s) for broking houses.
+- [Ki Insurance Classes of Business API](https://apis.io/apis/ki-insurance/ki-insurance-classes-of-business-api/) — The Classes of Business API from Ki Insurance — 1 operation(s) for classes of business.
+- [Ki Insurance Configuration API](https://apis.io/apis/ki-insurance/ki-insurance-configuration-api/) — The Configuration API from Ki Insurance — 1 operation(s) for configuration.
+- [Ki Insurance Dashboard API](https://apis.io/apis/ki-insurance/ki-insurance-dashboard-api/) — The Dashboard API from Ki Insurance — 2 operation(s) for dashboard.
+- [Ki Insurance Facilities API](https://apis.io/apis/ki-insurance/ki-insurance-facilities-api/) — The Facilities API from Ki Insurance — 4 operation(s) for facilities.
+- [Ki Insurance Indications API](https://apis.io/apis/ki-insurance/ki-insurance-indications-api/) — The Indications API from Ki Insurance — 2 operation(s) for indications.
+- [Ki Insurance Leads API](https://apis.io/apis/ki-insurance/ki-insurance-leads-api/) — The Leads API from Ki Insurance — 3 operation(s) for leads.
+- [Ki Insurance Market Leaders API](https://apis.io/apis/ki-insurance/ki-insurance-market-leaders-api/) — The Market Leaders API from Ki Insurance — 4 operation(s) for market leaders.
+- [Ki Insurance Master Data API](https://apis.io/apis/ki-insurance/ki-insurance-master-data-api/) — The Master Data API from Ki Insurance — 39 operation(s) for master data.
+- [Ki Insurance Pipeline API](https://apis.io/apis/ki-insurance/ki-insurance-pipeline-api/) — The Pipeline API from Ki Insurance — 2 operation(s) for pipeline.
+- [Ki Insurance Quotes API](https://apis.io/apis/ki-insurance/ki-insurance-quotes-api/) — The Quotes API from Ki Insurance — 15 operation(s) for quotes.
+- [Ki Insurance Risk Codes API](https://apis.io/apis/ki-insurance/ki-insurance-risk-codes-api/) — The Risk Codes API from Ki Insurance — 1 operation(s) for risk codes.
+- [Ki Insurance Schedule of Values API](https://apis.io/apis/ki-insurance/ki-insurance-schedule-of-values-api/) — The Schedule of Values API from Ki Insurance — 2 operation(s) for schedule of values.
+- [Ki Insurance Slip Extraction API](https://apis.io/apis/ki-insurance/ki-insurance-slip-extraction-api/) — The Slip Extraction API from Ki Insurance — 5 operation(s) for slip extraction.
+- [Ki Insurance Support API](https://apis.io/apis/ki-insurance/ki-insurance-support-api/) — The Support API from Ki Insurance — 1 operation(s) for support.
+- [Ki Insurance Telemetry API](https://apis.io/apis/ki-insurance/ki-insurance-telemetry-api/) — The Telemetry API from Ki Insurance — 1 operation(s) for telemetry.
+- [Ki Insurance Users API](https://apis.io/apis/ki-insurance/ki-insurance-users-api/) — The Users API from Ki Insurance — 10 operation(s) for users.
 
-## APIs
+### Published properties
 
-**Ki Broker Trading Platform API** — partner-gated, base URL `https://app.ki-insurance.com`.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Ki publishes no developer portal, no API reference, no self-serve signup and no OpenAPI. Every candidate developer host was probed and none resolves: `developer.`, `developers.`, `docs.`, `api.`, `platform.`, `broker-api.` and `sandbox.ki-insurance.com` all fail DNS, and `/developers`, `/api`, `/developer`, `/partners`, `/integrations` and `/brokers` on ki-insurance.com all return HTTP 404. The only live application surface is `app.ki-insurance.com`, the authenticated broker trading platform behind an Auth0 authorization-code login. `/openapi.json`, `/swagger.json` and `/graphql` on that host return HTTP 200 but serve the single-page app's HTML — catch-all false positives, explicitly rejected. `api.ki.com`, the OAuth audience Ki publishes in its runtime config, is a parked page, not a host.
+#### Arazzo workflows (2)
 
-What *is* observable is the platform API itself. Ki's own broker client ships a complete endpoint registry in its public JavaScript bundle, together with the `GET`/`POST`/`PUT`/`DELETE` helpers that call it. API Evangelist derived an OpenAPI from that bundle: **102 paths, 109 operations** across quotes, quote lines, algorithmic pricing, schedules of value, slip extraction, leads, pipeline, users, broking houses, branches, nominated lead syndicates and insurers, Lloyd's risk codes, facilities, and 38 class-of-business master-data lookups. Paths, methods, query-parameter names, the `Authorization: Bearer` scheme, the JSON content negotiation and the 401/403/503 semantics are verbatim observations. Request and response schemas are **not** published by Ki and were deliberately left unspecified rather than invented — [openapi/ki-insurance-broker-platform-openapi.yml](openapi/ki-insurance-broker-platform-openapi.yml) is an API Evangelist derivation, not a Ki contract.
+Multi-step workflows that chain operations into a business task.
 
-Notable gaps the derivation makes concrete: no idempotency contract on any write (including the firm order note that commits capacity), no pagination on any list, no RFC 9457 problem details or error registry, no rate-limit documentation, no webhooks or events, no sandbox, no status page, no deprecation policy, and no published scope model — authorisation is role and class-of-business entitlement enforced server-side and surfaced only as HTTP 403.
+- [Ki — quote a risk and run the follow algorithm](https://apis.io/arazzos/ki-insurance/ki-insurance-quote-and-price/)
+- [Ki — turn a broker slip into a quote](https://apis.io/arazzos/ki-insurance/ki-insurance-slip-to-quote/)
 
-**ACORD posture:** no ACORD reference found. Neither ACORD, AL3, ACORD XML, NGDS nor IVANS appears anywhere on Ki's public site or its 30 press releases. As a Lloyd's follow syndicate, Ki's market plumbing runs through Lloyd's own modernisation programme — Blueprint Two, the Core Data Record, PPL/Whitespace electronic placement — rather than through published ACORD assets. The one standards signal Ki emits publicly is a GitHub fork of [OasisLMF/OpenDataTransform](https://github.com/Ki-Insurance/OpenDataTransform), the open catastrophe exposure-data (OED) transformation tool.
+#### MCP servers (1)
 
-Ki is the archetype of the United Kingdom's London-market pattern: genuinely advanced machine-to-machine insurance placement infrastructure, built for brokers and syndicates rather than for developers, and therefore invisible from the outside.
+Model Context Protocol servers that expose the API to agents.
 
-## Links
+- [ki-insurance](https://apis.io/servers/ki-insurance/ki-insurance/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Ki Insurance Agentic Access](https://apis.io/agentic-access/ki-insurance/ki-insurance-agentic-access/)
+
+#### Collections (1)
+
+Postman and Open Collection request collections.
+
+- [Ki Broker Trading Platform API (observed)](https://apis.io/collections/ki-insurance/open-ki-insurance-broker-platform/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Ki Insurance Broker Platform Overlay](https://apis.io/overlays/ki-insurance/ki-insurance-broker-platform-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Ki Insurance Authentication](https://apis.io/security/ki-insurance/ki-insurance-authentication/)
+- [Ki Insurance Domain Security](https://apis.io/security/ki-insurance/ki-insurance-domain-security/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Ki Insurance Scopes](https://apis.io/scopes/ki-insurance/ki-insurance-scopes/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://ki-insurance.com/)
-- [About](https://ki-insurance.com/about/)
-- [News](https://ki-insurance.com/news/)
-- [Capacity Partners](https://ki-insurance.com/capacity-partners/)
-- [Broker Platform (login)](https://app.ki-insurance.com/)
-- [OIDC Discovery](https://login.ki-insurance.com/.well-known/openid-configuration)
+- [Sign up](https://app.ki-insurance.com/)
+- [Blog](https://ki-insurance.com/news/)
+- [Terms of service](https://app.ki-insurance.com/policies/2025/11/16/Ki_Website_Terms.pdf)
+- [Privacy policy](https://app.ki-insurance.com/policies/2025/V2/Ki_Privacy_Policy.pdf)
 - [GitHub](https://github.com/Ki-Insurance)
-- [LinkedIn](https://www.linkedin.com/company/ki-insurance)
 
-## Artifacts
+## API Evangelist rating
 
-- [OpenAPI (derived)](openapi/ki-insurance-broker-platform-openapi.yml) · [Overlay](overlays/ki-insurance-broker-platform-overlay.yaml)
-- [Authentication](authentication/ki-insurance-authentication.yml) · [OAuth scopes](scopes/ki-insurance-scopes.yml) · [Well-known](well-known/ki-insurance-well-known.yml)
-- [Conventions](conventions/ki-insurance-conventions.yml) · [Error catalog](errors/ki-insurance-problem-types.yml) · [Lifecycle](lifecycle/ki-insurance-lifecycle.yml) · [Conformance](conformance/ki-insurance-conformance.yml)
-- [Data model](data-model/ki-insurance-data-model.yml) · [Domain security](security/ki-insurance-domain-security.yml) · [Agentic access](agentic-access/ki-insurance-agentic-access.yml)
-- [MCP (candidate)](mcp/ki-insurance-mcp.yml) · [Tool crosswalk](mcp/ki-insurance-tool-crosswalk.yml) · [Agent skills](skills/_index.yml) · [Arazzo workflows](arazzo/_index.yml)
-- [llms.txt](llms/ki-insurance-llms.txt)
+**Kin Score 21.5** — emerging · rubric 0.24.0 · scored 2026-10-17
 
-## Review
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 14.3 |
+| Contract governance | 4.5 |
+| Operational transparency | 2.6 |
+| Developer ergonomics | 16.1 |
+| Access clarity | 21.1 |
 
-See [review.yml](review.yml) for the full API Evangelist reviewer finding, including every probed URL and its HTTP status, and the 2026-07-25 enrichment round that overturned the "no spec" conclusion.
+**Agent readiness 31.5** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+
+**Regulatory alignment 36.8** — Insurance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ki-insurance/](https://apis.io/providers/ki-insurance/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Ki Insurance: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ki-insurance/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
